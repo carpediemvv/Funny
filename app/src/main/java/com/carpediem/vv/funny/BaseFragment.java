@@ -15,6 +15,7 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = getActivity();
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -32,7 +33,7 @@ public abstract class BaseFragment extends Fragment {
         initData();
     }
 
-    private void initData() {
+    public void initData() {
 
     }
 }
