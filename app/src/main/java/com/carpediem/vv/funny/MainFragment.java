@@ -1,10 +1,15 @@
 package com.carpediem.vv.funny;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 /**
@@ -12,35 +17,23 @@ import android.widget.Toast;
  */
 public class MainFragment extends BaseFragment {
 
+
+    @Nullable
     @Override
-    protected View initView() {
-        View view=View.inflate(mActivity,R.layout.fragment_main,null);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.id_toolbar);
+        View view = View.inflate(mActivity, R.layout.fragment_main, null);
 
-        // App Logo
-        toolbar.setLogo(R.mipmap.ic_launcher);
-        // Title
-        toolbar.setTitle("App Title");
-        // Sub Title
-        toolbar.setSubtitle("Sub title");
-        //Navigation Icon
-        toolbar.setNavigationIcon(R.drawable.bottom_home_tab_bg);
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.add("Menu 1a").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        menu.add("Menu 1b").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-    }
+     @Override
+            protected View initView() {
+                View view=View.inflate(mActivity,R.layout.fragment_main,null);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(mActivity, "index is"+" && menu text is "+item.getTitle(), Toast.LENGTH_LONG).show();
-        return super.onOptionsItemSelected(item);
-    }
+                return view;
+            }
+
 
     @Override
     public void initData() {
