@@ -6,7 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="colorControlNormal">@color/colorControlNormal</item>
+        <!--itemBackground设置menu菜单背景色-->
+        <!--<item name="android:itemBackground">#3F51B5</item>-->
+        <item name="actionOverflowMenuStyle">@style/MenuStyle</item>
     </style>
     <style name="bottom_tab_style">
     <item name="android:layout_width">0dip</item>
@@ -21,6 +25,13 @@
     <item name="android:textSize">12sp</item>
     </style>
     <style name="OverflowButtonStyle" parent="@android:style/Widget.ActionButton.Overflow">
-        <item name="android:src">@mipmap/ic_launcher</item>
+        <!--这里更改menu菜单图标-->
+      <!--  <item name="android:src">@mipmap/ic_launcher</item>-->
+    </style>
+    <style name="MenuStyle" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:popupBackground">#3F51B5</item>
+        <!--距离标题栏的距离-->
+        <!--<item name="android:dropDownVerticalOffset">29dip</item>-->
     </style>
 </resources>

@@ -17,15 +17,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
         // App Logo
-        toolbar.setLogo(R.mipmap.ic_launcher);
+       // toolbar.setLogo(R.mipmap.ic_launcher);
         // Title
-        toolbar.setTitle("App Title");
+       toolbar.setTitle("四叶草");
         // Sub Title
-        toolbar.setSubtitle("Sub title");
+        //toolbar.setSubtitle("Sub title");
         //Navigation Icon
-        toolbar.setNavigationIcon(R.drawable.bottom_home_tab_bg);
-        toolbar.inflateMenu(R.menu.test);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        //toolbar.setNavigationIcon(R.drawable.bottom_home_tab_bg);
+       // toolbar.inflateMenu(R.menu.test);
+
+      /*  toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
@@ -36,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "" + itemId, Toast.LENGTH_SHORT).show();
                     case R.id.action_take_pic:
                         Toast.makeText(MainActivity.this, "" + itemId, Toast.LENGTH_SHORT).show();
+
                 }
                 return true;
             }
-        });
-        // setSupportActionBar(toolbar);
+        });*/
+         setSupportActionBar(toolbar);
         init();
     }
 
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-  /*  @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.test, menu);
@@ -61,5 +63,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 }
