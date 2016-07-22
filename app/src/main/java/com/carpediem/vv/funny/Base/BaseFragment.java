@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Base;
 
 import android.app.Activity;
 import android.os.Bundle;

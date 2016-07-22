@@ -11,15 +11,28 @@ import com.carpediem.vv.funny.Base.BaseFragment;
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class MainFragment extends BaseFragment {
+public class DailyFragment extends BaseFragment {
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = View.inflate(mActivity, R.layout.fragment_main, null);
+
+        return view;
+    }
+
      @Override
             protected View initView() {
                 View view=View.inflate(mActivity,R.layout.fragment_main,null);
+
                 return view;
             }
+
+
     @Override
     public void initData() {
         super.initData();
     }
-
 }
