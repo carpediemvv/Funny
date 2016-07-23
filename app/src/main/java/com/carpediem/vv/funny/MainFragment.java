@@ -71,6 +71,11 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         arrayList.get(position).initData(); // 把当前选中的页面的数据加载了
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
         //把页签也替换了
         if (position == 0) {
             rbDaily.setChecked(true);
@@ -96,11 +101,6 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
     public void onPageScrollStateChanged(int state) {
 
     }
@@ -120,8 +120,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
             case R.id.rb_main_fragment_my:
                 vpContentFragment.setCurrentItem(3);
                 break;
-            default:
-                break;
+
         }
     }
 
