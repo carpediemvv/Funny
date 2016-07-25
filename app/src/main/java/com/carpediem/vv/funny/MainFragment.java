@@ -17,11 +17,11 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class MainFragment extends BaseFragment implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener {
+public class MainFragment extends BaseFragment implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener         {
 
 
-    private ArrayList<BasePager> arrayList;
-    private ViewPager vpContentFragment;
+    public ArrayList<BasePager> arrayList;
+    public ViewPager vpContentFragment;
     private RadioGroup radioGroup;
     private RadioButton rbGame;
     private RadioButton rbDaily;

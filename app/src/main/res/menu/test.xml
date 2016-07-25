@@ -13,9 +13,9 @@
         app:showAsAction="withText"
         android:icon="@mipmap/ic_launcher"/>
     <item
-        android:id="@+id/action_take_pic"
-        android:title="照相"
-        app:showAsAction="never" />
+        android:id="@+id/menu_refresh"
+        android:title="刷新"
+        app:showAsAction="never"/>
    <item
         android:id="@+id/ab_search"
         android:orderInCategory="80"

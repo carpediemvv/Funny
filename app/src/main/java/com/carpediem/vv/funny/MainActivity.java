@@ -1,19 +1,16 @@
 package com.carpediem.vv.funny;
 
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -26,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private FragmentManager supportFragmentManager;
+    private MainFragment fragmentMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         //toolbar.setNavigationIcon(R.drawable.bottom_home_tab_bg);
         // toolbar.inflateMenu(R.menu.test);
         setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+       /* toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
@@ -51,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "" + itemId, Toast.LENGTH_SHORT).show();
                     case R.id.action_pick_pic:
                         Toast.makeText(MainActivity.this, "" + itemId, Toast.LENGTH_SHORT).show();
-                    case R.id.action_take_pic:
+                    case R.id.menu_refresh:
                         Toast.makeText(MainActivity.this, "" + itemId, Toast.LENGTH_SHORT).show();
 
                 }
                 return true;
             }
-        });
+        });*/
 
         init();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -66,8 +65,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentMain = (MainFragment) supportFragmentManager.findFragmentById(R.id.fl_main);
         fragmentTransaction.replace(R.id.fl_main, new MainFragment(), "main_fragment").commit();
 
     }
@@ -116,50 +116,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "action_pick_pic", Toast.LENGTH_SHORT).show();
 
         }
-        if (id == R.id.action_take_pic) {
-            Toast.makeText(MainActivity.this, "action_take_pic", Toast.LENGTH_SHORT).show();
+        if (id == R.id.menu_refresh) {
+            Toast.makeText(MainActivity.this, "menu_refresh", Toast.LENGTH_SHORT).show();
+
 
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.carpediem.vv.funny/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.carpediem.vv.funny/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
 }
