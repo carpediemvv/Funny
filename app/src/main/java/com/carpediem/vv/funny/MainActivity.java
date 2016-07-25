@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import FunnyGIF.Person;
+
 public class MainActivity extends AppCompatActivity {
 
     private SearchView mSearchView;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
         // App Logo
@@ -110,7 +113,21 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_publish) {
             Toast.makeText(MainActivity.this, "action_publish", Toast.LENGTH_SHORT).show();
+            Person p2 = new Person();
+            p2.setName("lucky");
+            p2.setAddress("北京海淀");
+           /* p2.save(new SaveListener<String>() {
+                @Override
+                public void done(String objectId,BmobException e) {
+                    if(e==null){
 
+                        Toast.makeText(MainActivity.this, "添加数据成功，返回objectId为"+objectId, Toast.LENGTH_SHORT).show();
+                    }else{
+
+                        Toast.makeText(MainActivity.this, "创建数据失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });*/
         }
         if (id == R.id.action_pick_pic) {
             Toast.makeText(MainActivity.this, "action_pick_pic", Toast.LENGTH_SHORT).show();
