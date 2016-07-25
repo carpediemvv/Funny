@@ -15,6 +15,9 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import FunnyGIF.Person;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bmob.initialize(this, "c4e9104738e2747a6c63855e7d2a9b7d");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
         // App Logo
@@ -66,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
+
 
     private void init() {
         supportFragmentManager = getSupportFragmentManager();
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             Person p2 = new Person();
             p2.setName("lucky");
             p2.setAddress("北京海淀");
-           /* p2.save(new SaveListener<String>() {
+            p2.save(new SaveListener<String>() {
                 @Override
                 public void done(String objectId,BmobException e) {
                     if(e==null){
@@ -127,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "创建数据失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-            });*/
+            });
         }
         if (id == R.id.action_pick_pic) {
             Toast.makeText(MainActivity.this, "action_pick_pic", Toast.LENGTH_SHORT).show();

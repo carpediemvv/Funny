@@ -1,9 +1,12 @@
 package FunnyGIF;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobObject;
+
 /**
  * Created by Administrator on 2016/7/25.
  */
-public class Person  {
+public class Person extends BmobObject {
     private String name;
     private String address;
 
