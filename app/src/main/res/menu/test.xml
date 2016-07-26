@@ -5,16 +5,16 @@
     <item
         android:id="@+id/action_publish"
 
-        android:title="发表"
+        android:title="投稿"
         app:showAsAction="never" />
-    <item
+<!--  &lt;!&ndash;  <item
         android:id="@+id/action_pick_pic"
         android:title="选择图片"
         app:showAsAction="withText"
-        android:icon="@mipmap/ic_launcher"/>
+        android:icon="@mipmap/ic_launcher"/>-->
     <item
         android:id="@+id/menu_refresh"
-        android:title="刷新"
+        android:title="分享"
         app:showAsAction="never"/>
    <item
         android:id="@+id/ab_search"
