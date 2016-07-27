@@ -1,6 +1,7 @@
 package com.carpediem.vv.funny;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,8 +72,21 @@ public class DailyFragment extends BasePager {
         }
 
         @Override
+        public int getItemViewType(int position) {
+            if (position % 2 != 0) {
+                // 奇数项返回0
+                return 0;
+            } else {
+                // 偶数项返回0
+                return 1;
+            }
+
+        }
+
+
+        @Override
         public int getViewTypeCount() {
-            return 3;
+            return super.getViewTypeCount();
         }
 
         @Override
@@ -82,8 +96,9 @@ public class DailyFragment extends BasePager {
                 convertView = View.inflate(mActivity, R.layout.item_list, null);
             }
             view = convertView;
-            TextView text = (TextView) view.findViewById(R.id.text);
-            text.setText(arrayList.get(position));
+            TextView itemText = (TextView) view.findViewById(R.id.text);
+            itemText.setText(arrayList.get(position));
+            itemText.setTextColor(Color.GRAY);
             return view;
         }
     }
