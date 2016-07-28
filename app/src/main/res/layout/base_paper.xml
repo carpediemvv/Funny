@@ -11,6 +11,9 @@
         android:id="@+id/fl_base_paper_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="测试"/>
     </FrameLayout>
 </LinearLayout>

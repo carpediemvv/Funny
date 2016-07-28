@@ -1,11 +1,12 @@
 package com.carpediem.vv.funny;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,20 +32,34 @@ public class DailyFragment extends BasePager {
     @Override
     public View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_daily, null);
+        //初始化数据
+        arrayList = new ArrayList<>();
+        for(int i=0;i<10;i++) {
+            arrayList.add("这是第"+i+"条数据");
+        }
         //listview
         listView = (ListView) view.findViewById(R.id.listview);
-
+        initListView();
         //下拉刷新
-        swiperefresh = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
+       /* swiperefresh = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 updateDate();
             }
-        });
+        });*/
         return view;
     }
 
+    @Override
+    public void initData() {
+      /*  arrayList = new ArrayList<>();
+        for(int i=0;i<10;i++) {
+            arrayList.add("这是第"+i+"条数据");
+        }*/
+        //initListView();
+
+    }
     /**
      * listView
      */
@@ -91,18 +106,35 @@ public class DailyFragment extends BasePager {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view;
+
+            ViewHolder viewHolder = null;
             if (convertView == null) {
+                viewHolder = new ViewHolder();
                 convertView = View.inflate(mActivity, R.layout.item_list, null);
+                viewHolder.text_content = (TextView)convertView.findViewById(R.id.text_content);
+                viewHolder.image_content= (ImageView) convertView.findViewById(R.id.image_content);
+                viewHolder.button_like = (Button)convertView.findViewById(R.id.button_like);
+                viewHolder.button_dislike = (Button)convertView.findViewById(R.id.button_dislike);
+                viewHolder.button_share = (Button)convertView.findViewById(R.id.button_share);
+                viewHolder.button_comment = (Button)convertView.findViewById(R.id.button_comment);
+                convertView.setTag(viewHolder);
+            }else {
+                viewHolder = (ViewHolder)convertView.getTag();
             }
-            view = convertView;
-            TextView itemText = (TextView) view.findViewById(R.id.text);
-            itemText.setText(arrayList.get(position));
-            itemText.setTextColor(Color.GRAY);
-            return view;
+
+            viewHolder.text_content.setText(arrayList.get(position));
+
+            return convertView;
         }
     }
-
+    public final class ViewHolder {
+        public TextView text_content;
+        public ImageView image_content;
+        public Button button_like;
+        public Button button_dislike;
+        public Button button_share;
+        public Button button_comment;
+    }
     /**
      * 下拉刷新
      */
@@ -112,14 +144,5 @@ public class DailyFragment extends BasePager {
         swiperefresh.setRefreshing(false);
     }
 
-    @Override
-    public void initData() {
-        arrayList = new ArrayList<>();
-        for(int i=0;i<10;i++) {
-            arrayList.add("这是第"+i+"条数据");
-        }
-        initListView();
-        super.initData();
-    }
 
 }
