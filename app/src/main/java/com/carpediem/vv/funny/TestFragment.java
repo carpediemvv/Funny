@@ -18,26 +18,30 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class DailyFragment extends BasePager {
+public class TestFragment extends BasePager {
 
 
     public SwipeRefreshLayout swiperefresh;
     private ListView listView;
     private ArrayList<String> arrayList;
 
-    public DailyFragment(Activity activity) {
+    public TestFragment(Activity activity) {
         super(activity);
     }
 
     @Override
     public View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_daily, null);
-
+        //初始化数据
+       /* arrayList = new ArrayList<>();
+        for(int i=0;i<10;i++) {
+            arrayList.add("这是第"+i+"条数据");
+        }*/
         //listview
         listView = (ListView) view.findViewById(R.id.listview);
         ListViewAdapter listViewAdapter = new ListViewAdapter();
         listView.setAdapter(listViewAdapter);
-
+       // initListView();
         //下拉刷新
         swiperefresh = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -53,7 +57,7 @@ public class DailyFragment extends BasePager {
     public void initData() {
         arrayList = new ArrayList<>();
         for(int i=0;i<10;i++) {
-            arrayList.add("这是第"+i+"条数据");
+            arrayList.add("这是第test"+i+"条数据");
         }
     }
 
@@ -62,10 +66,10 @@ public class DailyFragment extends BasePager {
 
         @Override
         public int getCount() {
-            if(arrayList!=null){
-                return arrayList.size();
+            if(arrayList==null){
+                return 0;
             }
-            return 0;
+            return arrayList.size();
         }
 
         @Override
@@ -113,9 +117,9 @@ public class DailyFragment extends BasePager {
             }else {
                 viewHolder = (ViewHolder)convertView.getTag();
             }
-            if(arrayList!=null){
-                viewHolder.text_content.setText(arrayList.get(position));
-            }
+                if(arrayList!=null){
+                    viewHolder.text_content.setText(arrayList.get(position));
+                }
 
 
             return convertView;

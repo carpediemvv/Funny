@@ -45,9 +45,9 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
         // 初始化ViewPager的数据
         arrayList = new ArrayList<>();
         arrayList.add(new DailyFragment(mActivity));
-        arrayList.add(new DailyFragment(mActivity));
-        arrayList.add(new DailyFragment(mActivity));
-        arrayList.add(new DailyFragment(mActivity));
+        arrayList.add(new TestFragment(mActivity));
+        arrayList.add(new TestFragment(mActivity));
+        arrayList.add(new TestFragment(mActivity));
         //绑定数据
         ContentAdapter contentAdapter = new ContentAdapter();
         vpContentFragment.setAdapter(contentAdapter);
@@ -70,7 +70,10 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        arrayList.get(position).initData(); // 把当前选中的页面的数据加载了
+        //会刷新两次，出问题
+
+            arrayList.get(position).initData(); // 把当前选中的页面的数据加载了
+
 
     }
 
