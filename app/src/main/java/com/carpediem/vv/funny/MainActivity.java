@@ -1,6 +1,5 @@
 package com.carpediem.vv.funny;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,10 +9,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.carpediem.vv.funny.Base.BasePager;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -133,22 +130,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Created by Administrator on 2016/7/28.
-     */
-    public static class testFragment extends BasePager {
-        public testFragment(Activity activity) {
-            super(activity);
-        }
 
-        @Override
-        public View initView() {
-            return super.initView();
-        }
-
-        @Override
-        public void initData() {
-            super.initData();
-        }
-    }
 }
