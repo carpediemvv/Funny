@@ -37,11 +37,6 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
         rbDaily = (RadioButton) view.findViewById(R.id.rb_main_fragment_daily);
         rbKnow = (RadioButton) view.findViewById(R.id.rb_main_fragment_knowledge);
         rbMy = (RadioButton) view.findViewById(R.id.rb_main_fragment_my);
-        return view;
-    }
-
-    @Override
-    public void initData() {
         // 初始化ViewPager的数据
         arrayList = new ArrayList<>();
         arrayList.add(new DailyFragment(mActivity));
@@ -56,8 +51,14 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
         radioGroup.setOnCheckedChangeListener(this);
         //设置默认选中的页面为: 首页
         radioGroup.check(R.id.rb_main_fragment_daily);
+        return view;
+    }
+
+    @Override
+    public void initData() {
+
         //加载首页数据
-        arrayList.get(0).initData();
+       // arrayList.get(0).initData();
     }
 
     @Override
