@@ -24,7 +24,6 @@ import java.util.List;
 
 import FunnyGIF.FunnyGif;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -42,6 +41,7 @@ public class DailyFragment extends BasePager {
     private int lastItem;
     List<FunnyGif> arrayList = new ArrayList<FunnyGif>();
     private String lastTime;
+    private int isLoadData;
 
     public DailyFragment(Activity activity) {
         super(activity);
@@ -60,9 +60,11 @@ public class DailyFragment extends BasePager {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (lastItem == (listView.getCount()-1)&& scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                     if (view.getLastVisiblePosition() == view.getCount() - 1) {
-                        Toast.makeText(mActivity, "马上加载更多", Toast.LENGTH_SHORT).show();
                         Log.e("listview",""+listView.getCount());
-                        loadData();
+                        if(isLoadData==0){
+                            loadData();
+                        }
+
                     }
                 }
             }
@@ -88,14 +90,16 @@ public class DailyFragment extends BasePager {
     }
 
     private void loadData() {
+        isLoadData = 1;
         Log.e("bmob查询的数据",curPage+"：curPage");
-        queryData(curPage, STATE_MORE);
+        Toast.makeText(mActivity, "正在加载", Toast.LENGTH_SHORT).show();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
+                queryData(curPage, STATE_MORE);
                 int count = listViewAdapter.getCount();
-                Toast.makeText(mActivity, "加载新数据的个数"+count, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mActivity, "加载新数据的个数"+count, Toast.LENGTH_SHORT).show();
                 listViewAdapter.notifyDataSetChanged();
             }
         }, 3000);
@@ -194,7 +198,7 @@ public class DailyFragment extends BasePager {
      * 下拉刷新
      */
     public void updateDate() {
-        Toast.makeText(mActivity, "刷新", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(mActivity, "刷新", Toast.LENGTH_SHORT).show();
         queryData(0, STATE_REFRESH);
          handler = new Handler();
         this.handler.postDelayed(new Runnable() {
@@ -232,9 +236,13 @@ public class DailyFragment extends BasePager {
                 e.printStackTrace();
             }
             // 只查询小于等于最后一个item发表时间的数据
-            query.addWhereLessThanOrEqualTo("createdAt", new BmobDate(date));
+            //query.addWhereLessThanOrEqualTo("createdAt", new BmobDate(date));
             // 跳过之前页数并去掉重复数据
-            query.setSkip(curPage * limit+1);
+
+                query.setSkip(curPage * limit);
+
+               // query.setSkip(curPage * limit+1);
+
         }else{
             curPage=0;
             query.setSkip(curPage);
@@ -246,24 +254,32 @@ public class DailyFragment extends BasePager {
             @Override
             public void done(List<FunnyGif> list, BmobException e) {
                 if(e==null){
-                    Toast.makeText(mActivity, "查询成功共"+list.size()+"条数据", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mActivity, "查询成功共"+list.size()+"条数据", Toast.LENGTH_SHORT).show();
                     Log.e("bmob查询的数据","查询成功共"+list.size()+"条数据");
-                    for (FunnyGif fg : list) {
-                        Log.e("bmob查询的数据","数据："+fg.getTextContent());
+                    if(actionType ==STATE_MORE ){
+                        isLoadData=0;
+                        if(list.size()==0){
+                            Toast.makeText(mActivity, "没有更多数据了", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                    if(actionType == STATE_REFRESH){
                         // 当是下拉刷新操作时，将当前页的编号重置为0，并把bankCards清空，重新添加
                         curPage = 0;
                         arrayList.clear();
                         // 获取最后时间
                         lastTime = list.get(list.size()-1).getCreatedAt();
                     }
-                    // 将本次查询的数据添加到bankCards中
+
+                    // 将本次查询的数据添加到arrayList中
                     for (FunnyGif fg : list) {
                         arrayList.add(fg);
-                        Log.e("arrayList","arrayList：成功"+curPage);
+                        //Log.e("arrayList","arrayList：成功"+curPage);
                     }
                     // 这里在每次加载完数据后，将当前页码+1，这样在上拉刷新的onPullUpToRefresh方法中就不需要操作curPage了
                     curPage++;
-                    Log.e("curPage++","curPage："+curPage);
+                    Log.e("bmob查询的数据++","curPage："+curPage);
+
                 }else if(actionType == STATE_MORE){
                     Toast.makeText(mActivity, "没有更多数据了", Toast.LENGTH_SHORT).show();
                 }else if(actionType == STATE_REFRESH){
