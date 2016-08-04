@@ -3,17 +3,15 @@ package com.carpediem.vv.funny;
 import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.MediaController;
 
 import com.carpediem.vv.funny.Base.BasePager;
 
 import java.util.ArrayList;
+
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by Administrator on 2016/6/28.
@@ -31,12 +29,12 @@ public class TestFragment extends BasePager {
 
     @Override
     public View initView() {
-        View view = View.inflate(mActivity, R.layout.fragment_daily, null);
-        //初始化数据
-       /* arrayList = new ArrayList<>();
+        View view = View.inflate(mActivity, R.layout.fragment_test, null);
+       /* //初始化数据
+       *//* arrayList = new ArrayList<>();
         for(int i=0;i<10;i++) {
             arrayList.add("这是第"+i+"条数据");
-        }*/
+        }*//*
         //listview
         listView = (ListView) view.findViewById(R.id.listview);
         ListViewAdapter listViewAdapter = new ListViewAdapter();
@@ -49,18 +47,38 @@ public class TestFragment extends BasePager {
             public void onRefresh() {
                 updateDate();
             }
+        });*/
+        final GifImageView gif = (GifImageView) view.findViewById(R.id.gif);
+
+        final MediaController mc = new MediaController(mActivity);
+        //将图片放入媒体控制器中
+        mc.setMediaPlayer((GifDrawable) gif.getDrawable());
+        ((GifDrawable) gif.getDrawable()).start();
+        mc.setAnchorView(gif);
+        //给图片添加监听，点击就会显示播放控件
+        gif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((GifDrawable) gif.getDrawable()).isPlaying()) {
+                    ((GifDrawable) gif.getDrawable()).stop();
+                }else {
+                    ((GifDrawable) gif.getDrawable()).reset();
+                }
+            }
         });
+
         return view;
     }
 
     @Override
     public void initData() {
-        arrayList = new ArrayList<>();
+       /* arrayList = new ArrayList<>();
         for(int i=0;i<10;i++) {
             arrayList.add("这是第test"+i+"条数据");
-        }
+        }*/
     }
 
+/*
 
     class ListViewAdapter extends BaseAdapter {
 
@@ -133,14 +151,17 @@ public class TestFragment extends BasePager {
         public Button button_share;
         public Button button_comment;
     }
-    /**
-     * 下拉刷新
-     */
+    */
+/**
+ * 下拉刷新
+ *//*
+
     public void updateDate() {
         Toast.makeText(mActivity, "刷新", Toast.LENGTH_SHORT).show();
 
         swiperefresh.setRefreshing(false);
     }
+*/
 
 
 }
