@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.MediaController;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.carpediem.vv.funny.Base.BasePager;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class TestFragment extends BasePager {
                 updateDate();
             }
         });*/
+        RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
         final GifImageView gif = (GifImageView) view.findViewById(R.id.gif);
 
         final MediaController mc = new MediaController(mActivity);

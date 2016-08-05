@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +25,7 @@ import FunnyGIF.FunnyGif;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by Administrator on 2016/6/28.
@@ -163,7 +163,8 @@ public class DailyFragment extends BasePager {
                 viewHolder = new ViewHolder();
                 convertView = View.inflate(mActivity, R.layout.item_list, null);
                 viewHolder.text_content = (TextView) convertView.findViewById(R.id.text_content);
-                viewHolder.image_content = (ImageView) convertView.findViewById(R.id.image_content);
+                viewHolder.gifcontenturl = (TextView) convertView.findViewById(R.id.gifcontenturl);
+                viewHolder.image_content = (GifImageView) convertView.findViewById(R.id.gif);
                 viewHolder.button_like = (Button) convertView.findViewById(R.id.button_like);
                 viewHolder.button_dislike = (Button) convertView.findViewById(R.id.button_dislike);
                 viewHolder.button_share = (Button) convertView.findViewById(R.id.button_share);
@@ -174,6 +175,10 @@ public class DailyFragment extends BasePager {
             }
             if (arrayList != null) {
                 viewHolder.text_content.setText(arrayList.get(position).getTextContent());
+                if(arrayList.get(position).getGifContent()!=null){
+                    viewHolder.gifcontenturl.setText(arrayList.get(position).getGifContent().getUrl());
+                }
+
             }
 
 
@@ -183,7 +188,8 @@ public class DailyFragment extends BasePager {
 
     public final class ViewHolder {
         public TextView text_content;
-        public ImageView image_content;
+        public TextView gifcontenturl;
+        public GifImageView image_content;
         public Button button_like;
         public Button button_dislike;
         public Button button_share;
