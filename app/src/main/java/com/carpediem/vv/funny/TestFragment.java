@@ -3,16 +3,15 @@ package com.carpediem.vv.funny;
 import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.MediaController;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.carpediem.vv.funny.Base.BasePager;
 
 import java.util.ArrayList;
 
-import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -32,27 +31,43 @@ public class TestFragment extends BasePager {
     @Override
     public View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_test, null);
-       /* //初始化数据
-       *//* arrayList = new ArrayList<>();
-        for(int i=0;i<10;i++) {
-            arrayList.add("这是第"+i+"条数据");
-        }*//*
-        //listview
-        listView = (ListView) view.findViewById(R.id.listview);
-        ListViewAdapter listViewAdapter = new ListViewAdapter();
-        listView.setAdapter(listViewAdapter);
-       // initListView();
-        //下拉刷新
-        swiperefresh = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
-        swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateDate();
-            }
-        });*/
+        /**
+         * volley的ImageLoader暂时不支持GIF,需要自定义，缓存策略也不完善
+         */
+       /* final GifImageView gif = (GifImageView) view.findViewById(R.id.gif);
+        //创建一个请求队列
         RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-        final GifImageView gif = (GifImageView) view.findViewById(R.id.gif);
+        //创建imageLoader
+        ImageLoader imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
+            @Override
+            public void putBitmap(String url, Bitmap bitmap) {
+            }
 
+            @Override
+            public Bitmap getBitmap(String url) {
+                return null;
+            }
+        });
+        //获取一个ImageListener对象
+        ImageLoader.ImageListener listener = ImageLoader.getImageListener(gif,
+                R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+
+        imageLoader.get("http://bmob-cdn-5372.b0.upaiyun.com/2016/08/06/bb7c7a1f40a47ef1801acf623f266f16.gif", listener);
+*/
+        /**
+         * Glide图片加载
+         */
+        String imageUrl="http://78re52.com1.z0.glb.clouddn.com/resource/gogopher.jpg?imageView2/1/w/200/h/200/format/jpg";
+        String gifUrl="http://bmob-cdn-5372.b0.upaiyun.com/2016/08/06/bb7c7a1f40a47ef1801acf623f266f16.gif";
+        GifImageView gif = (GifImageView) view.findViewById(R.id.gif);
+        ImageView imageView = (ImageView) view.findViewById(R.id.image);
+        //Glide.with(mActivity).load(imageUrl).into(imageView);
+        Glide.with(mActivity).load(gifUrl).asGif().into(imageView);
+        Glide.with(mActivity).load(gifUrl).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageView);
+
+        // Glide.with(mActivity).load(imageUrl).placeholder(R.mipmap.ic_launcher).error(R.mipmap.erroriamge).into(imageView);
+/*
+        //final GifImageView gif = (GifImageView) view.findViewById(R.id.gif);
         final MediaController mc = new MediaController(mActivity);
         //将图片放入媒体控制器中
         mc.setMediaPlayer((GifDrawable) gif.getDrawable());
@@ -69,102 +84,14 @@ public class TestFragment extends BasePager {
                 }
             }
         });
+*/
 
         return view;
     }
 
     @Override
     public void initData() {
-       /* arrayList = new ArrayList<>();
-        for(int i=0;i<10;i++) {
-            arrayList.add("这是第test"+i+"条数据");
-        }*/
     }
-
-/*
-
-    class ListViewAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            if(arrayList==null){
-                return 0;
-            }
-            return arrayList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            if (position % 2 != 0) {
-                // 奇数项返回0
-                return 0;
-            } else {
-                // 偶数项返回0
-                return 1;
-            }
-
-        }
-
-
-        @Override
-        public int getViewTypeCount() {
-            return super.getViewTypeCount();
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ViewHolder viewHolder = null;
-            if (convertView == null) {
-                viewHolder = new ViewHolder();
-                convertView = View.inflate(mActivity, R.layout.item_list, null);
-                viewHolder.text_content = (TextView)convertView.findViewById(R.id.text_content);
-                viewHolder.image_content= (ImageView) convertView.findViewById(R.id.image_content);
-                viewHolder.button_like = (Button)convertView.findViewById(R.id.button_like);
-                viewHolder.button_dislike = (Button)convertView.findViewById(R.id.button_dislike);
-                viewHolder.button_share = (Button)convertView.findViewById(R.id.button_share);
-                viewHolder.button_comment = (Button)convertView.findViewById(R.id.button_comment);
-                convertView.setTag(viewHolder);
-            }else {
-                viewHolder = (ViewHolder)convertView.getTag();
-            }
-                if(arrayList!=null){
-                    viewHolder.text_content.setText(arrayList.get(position));
-                }
-
-
-            return convertView;
-        }
-    }
-    public final class ViewHolder {
-        public TextView text_content;
-        public ImageView image_content;
-        public Button button_like;
-        public Button button_dislike;
-        public Button button_share;
-        public Button button_comment;
-    }
-    */
-/**
- * 下拉刷新
- *//*
-
-    public void updateDate() {
-        Toast.makeText(mActivity, "刷新", Toast.LENGTH_SHORT).show();
-
-        swiperefresh.setRefreshing(false);
-    }
-*/
 
 
 }

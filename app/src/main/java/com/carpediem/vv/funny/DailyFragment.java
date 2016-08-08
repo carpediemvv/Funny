@@ -177,6 +177,7 @@ public class DailyFragment extends BasePager {
                 viewHolder.text_content.setText(arrayList.get(position).getTextContent());
                 if(arrayList.get(position).getGifContent()!=null){
                     viewHolder.gifcontenturl.setText(arrayList.get(position).getGifContent().getUrl());
+                    //viewHolder.image_content.setImageURI();
                 }
 
             }
