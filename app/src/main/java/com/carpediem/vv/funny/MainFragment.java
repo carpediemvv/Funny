@@ -30,6 +30,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
 
     @Override
     protected View initView() {
+
         View view = View.inflate(mActivity, R.layout.fragment_main, null);
         vpContentFragment = (ViewPager) view.findViewById(R.id.vp_content_fragment);
         radioGroup = (RadioGroup) view.findViewById(R.id.rg_content_fragment);

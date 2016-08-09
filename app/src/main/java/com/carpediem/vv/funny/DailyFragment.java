@@ -25,11 +25,9 @@ import java.util.Date;
 import java.util.List;
 
 import FunnyGIF.FunnyGif;
-import Utils.CacheUtils;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by Administrator on 2016/6/28.
@@ -57,11 +55,8 @@ public class DailyFragment extends BasePager {
 
         //listview
         listView = (ListView) view.findViewById(R.id.listview);
-        GifImageView update = (GifImageView) view.findViewById(R.id.empty_view);
-        listView.setEmptyView(update);
-
-
-
+       // GifImageView update = (GifImageView) view.findViewById(R.id.empty_view);
+       // listView.setEmptyView(update);
         listViewAdapter = new ListViewAdapter();
         listView.setAdapter(listViewAdapter);
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -118,9 +113,13 @@ public class DailyFragment extends BasePager {
     @Override
     public void initData() {
 
+       /* if (firststart){
             updateDate();
 
-        arrayList = new ArrayList<>();
+        }*/
+if (arrayList==null){
+    arrayList = new ArrayList<>();
+}
 
     }
 
@@ -185,8 +184,12 @@ public class DailyFragment extends BasePager {
                 viewHolder.text_content.setText(arrayList.get(position).getTextContent());
                 if (arrayList.get(position).getGifContent() != null) {
                     viewHolder.gifcontenturl.setText(arrayList.get(position).getGifContent().getUrl());
-                    Glide.with(mActivity).load(arrayList.get(position).getGifContent().getUrl()).asGif().
-                            diskCacheStrategy(DiskCacheStrategy.SOURCE).into(viewHolder.image_content);
+                    Glide.with(mActivity)
+                            .load(arrayList.get(position).getGifContent().getUrl())
+                            .asGif()
+
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(viewHolder.image_content);
                 }
 
             }
@@ -216,6 +219,7 @@ public class DailyFragment extends BasePager {
      * 下拉刷新
      */
     public void updateDate() {
+        swiperefresh.setRefreshing(true);
         // Toast.makeText(mActivity, "刷新", Toast.LENGTH_SHORT).show();
         queryData(0, STATE_REFRESH);
         handler = new Handler();

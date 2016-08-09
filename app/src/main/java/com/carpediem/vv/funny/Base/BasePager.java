@@ -21,9 +21,11 @@ public class BasePager {
     public BasePager(Activity activity) {
         this.mActivity = activity;
         mRootView = initView();
+
     }
 
     public View initView() {
+
         View view = View.inflate(mActivity, R.layout.base_paper, null);
 
         return view;
