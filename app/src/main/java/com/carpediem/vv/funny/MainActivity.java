@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import Utils.MyApplication;
 import cn.bmob.v3.Bmob;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,11 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient client;
     private FragmentManager supportFragmentManager;
     private MainFragment fragmentMain;
-    public MyApplication mMyApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMyApplication = (MyApplication)getApplication();
         Bmob.initialize(this, "c4e9104738e2747a6c63855e7d2a9b7d");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);

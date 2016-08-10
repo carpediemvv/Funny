@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import FunnyGIF.FunnyGif;
+import Utils.MyApplication;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -44,6 +45,8 @@ public class DailyFragment extends BasePager {
     List<FunnyGif> arrayList = new ArrayList<FunnyGif>();
     private String lastTime;
     private int isLoadData;
+    private MyApplication myApplication;
+
 
     public DailyFragment(Activity activity) {
         super(activity);
@@ -52,7 +55,7 @@ public class DailyFragment extends BasePager {
     @Override
     public View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_daily, null);
-
+        myApplication = MyApplication.getInstance();
         //listview
         listView = (ListView) view.findViewById(R.id.listview);
        // GifImageView update = (GifImageView) view.findViewById(R.id.empty_view);
@@ -113,13 +116,13 @@ public class DailyFragment extends BasePager {
     @Override
     public void initData() {
 
-       /* if (firststart){
+        if (myApplication.firstStart){
             updateDate();
-
-        }*/
-if (arrayList==null){
-    arrayList = new ArrayList<>();
-}
+            myApplication.firstStart=false;
+        }
+        if (arrayList==null){
+              arrayList = new ArrayList<>();
+        }
 
     }
 
@@ -170,7 +173,7 @@ if (arrayList==null){
                 viewHolder = new ViewHolder();
                 convertView = View.inflate(mActivity, R.layout.item_list, null);
                 viewHolder.text_content = (TextView) convertView.findViewById(R.id.text_content);
-                viewHolder.gifcontenturl = (TextView) convertView.findViewById(R.id.gifcontenturl);
+
                 viewHolder.image_content = (ImageView) convertView.findViewById(R.id.imagegif);
                 viewHolder.button_like = (Button) convertView.findViewById(R.id.button_like);
                 viewHolder.button_dislike = (Button) convertView.findViewById(R.id.button_dislike);
@@ -183,11 +186,10 @@ if (arrayList==null){
             if (arrayList != null) {
                 viewHolder.text_content.setText(arrayList.get(position).getTextContent());
                 if (arrayList.get(position).getGifContent() != null) {
-                    viewHolder.gifcontenturl.setText(arrayList.get(position).getGifContent().getUrl());
                     Glide.with(mActivity)
                             .load(arrayList.get(position).getGifContent().getUrl())
-                            .asGif()
-
+                            .fitCenter()
+                            .placeholder(R.mipmap.ic_launcher)
                             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                             .into(viewHolder.image_content);
                 }
@@ -201,7 +203,7 @@ if (arrayList==null){
 
     public final class ViewHolder {
         public TextView text_content;
-        public TextView gifcontenturl;
+
         public ImageView image_content;
         public Button button_like;
         public Button button_dislike;
