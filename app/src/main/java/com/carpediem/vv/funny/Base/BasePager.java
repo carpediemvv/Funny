@@ -3,6 +3,7 @@ package com.carpediem.vv.funny.Base;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.widget.Toast;
 
 import com.carpediem.vv.funny.R;
 
@@ -37,7 +38,7 @@ public class BasePager {
      * 初始化数据, 子类覆盖此方法, 实现自己的数据初始化
      */
     public void initData() {
-
+        Toast.makeText(mActivity,"jichgeng",Toast.LENGTH_SHORT).show();
     }
 
 

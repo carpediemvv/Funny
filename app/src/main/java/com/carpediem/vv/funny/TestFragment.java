@@ -17,7 +17,7 @@ import pl.droidsonroids.gif.GifImageView;
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class TestFragment extends BasePager {
+public class TestFragment extends BasePager  {
 
 
     public SwipeRefreshLayout swiperefresh;
@@ -89,9 +89,7 @@ public class TestFragment extends BasePager {
         return view;
     }
 
-    @Override
-    public void initData() {
-    }
+
 
 
 }

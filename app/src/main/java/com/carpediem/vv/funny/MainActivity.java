@@ -2,7 +2,6 @@ package com.carpediem.vv.funny;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -11,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -69,11 +70,36 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void init() {
-        supportFragmentManager = getSupportFragmentManager();
+        /*supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentMain = (MainFragment) supportFragmentManager.findFragmentById(R.id.fl_main);
-        fragmentTransaction.replace(R.id.fl_main, new MainFragment(), "main_fragment").commit();
+        fragmentTransaction.replace(R.id.fl_main, new MainFragment(), "main_fragment").commit();*/
 
+        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+
+        bottomNavigationBar
+                .addItem(new BottomNavigationItem(R.mipmap.home, "Hom1e"))
+                .addItem(new BottomNavigationItem(R.mipmap.order, "Bo2oks"))
+                .addItem(new BottomNavigationItem(R.mipmap.user2, "Mu3sic"))
+                .addItem(new BottomNavigationItem(R.mipmap.home, "Mo4vies & TV"))
+                .addItem(new BottomNavigationItem(R.mipmap.order, "G5ames"))
+                .initialise();
+        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener(){
+            @Override
+            public void onTabSelected(int position) {
+                Toast.makeText(MainActivity.this, "onTabSelected"+position, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onTabUnselected(int position) {
+                Toast.makeText(MainActivity.this, "onTabUnselected"+position, Toast.LENGTH_SHORT).show();
+
+            }
+            @Override
+            public void onTabReselected(int position) {
+                Toast.makeText(MainActivity.this, "onTabReselected"+position, Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
