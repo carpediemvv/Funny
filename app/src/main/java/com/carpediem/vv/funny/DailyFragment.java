@@ -34,7 +34,7 @@ public class DailyFragment extends BaseFragment {
         {
             mDatas.add("" + (char) i);
         }
-
+super.initData();
     }
 
     @Override

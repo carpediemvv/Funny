@@ -1,9 +1,11 @@
 package com.carpediem.vv.funny.Base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,12 @@ import android.view.ViewGroup;
 public abstract class BaseFragment extends Fragment {
     public Activity mActivity;
 
+    @Override
+    public void onAttach(Context context) {
+        Log.i("initdata", "onAttach: 初始化");
+        super.onAttach(context);
+        initData();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,10 +40,10 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
+
     }
 
     public void initData() {
-
+        Log.i("initdata", "initData: 父元素初始化");
     }
 }
