@@ -40,7 +40,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
         rbMy = (RadioButton) view.findViewById(R.id.rb_main_fragment_my);
         // 初始化ViewPager的数据
         arrayList = new ArrayList<>();
-        arrayList.add(new DailyFragment(mActivity));
+
         arrayList.add(new TestFragment(mActivity));
         arrayList.add(new TestFragment(mActivity));
         arrayList.add(new TestFragment(mActivity));

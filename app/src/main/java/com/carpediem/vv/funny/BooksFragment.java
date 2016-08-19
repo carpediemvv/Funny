@@ -4,7 +4,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class DailyFragment extends BaseFragment {
+public class BooksFragment extends BaseFragment {
 
 
     private Toolbar toolbar;
@@ -28,13 +27,12 @@ public class DailyFragment extends BaseFragment {
     HomeAdapter mAdapter;
     @Override
     public void initData() {
-        Log.i("initdata", "initData: 子元素初始化");
         mDatas = new ArrayList<String>();
         for (int i = 'A'; i < 'z'; i++)
         {
             mDatas.add("" + (char) i);
         }
-
+        super.initData();
     }
 
     @Override
