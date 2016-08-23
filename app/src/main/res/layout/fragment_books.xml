@@ -5,27 +5,13 @@
     android:layout_height="match_parent"
     >
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+     <include layout="@layout/toolbar"></include>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/SwipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/id_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-        <!--  <android.support.design.widget.TabLayout
-              android:id="@+id/tabs"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content" />-->
-
-    </android.support.design.widget.AppBarLayout>
-
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_gif"
         android:layout_width="match_parent"
@@ -33,4 +19,5 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>

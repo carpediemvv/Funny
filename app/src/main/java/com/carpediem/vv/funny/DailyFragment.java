@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
+import com.carpediem.vv.funny.Base.DividerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ super.initData();
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_books, null);
-        toolbar = (Toolbar) view.findViewById(R.id.id_toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_gif);
         initRecyclerView();
         initToolbar();
@@ -61,7 +62,7 @@ super.initData();
         //设置Item增加、移除动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
-       // recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
+       recyclerView.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.HORIZONTAL_LIST));
     }
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
@@ -95,7 +96,7 @@ super.initData();
             public MyViewHolder(View view)
             {
                 super(view);
-                tv = (TextView) view.findViewById(R.id.id_num);
+                tv = (TextView) view.findViewById(R.id.text_content);
             }
         }
     }

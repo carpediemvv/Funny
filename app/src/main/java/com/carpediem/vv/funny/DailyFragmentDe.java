@@ -166,7 +166,7 @@ public class DailyFragmentDe extends BaseFragment {
                 convertView = View.inflate(mActivity, R.layout.item_list, null);
                 viewHolder.text_content = (TextView) convertView.findViewById(R.id.text_content);
 
-                viewHolder.image_content = (ImageView) convertView.findViewById(R.id.imagegif);
+                viewHolder.image_content = (ImageView) convertView.findViewById(R.id.image_gif);
                 viewHolder.button_like = (Button) convertView.findViewById(R.id.button_like);
                 viewHolder.button_dislike = (Button) convertView.findViewById(R.id.button_dislike);
                 viewHolder.button_share = (Button) convertView.findViewById(R.id.button_share);

@@ -1,5 +1,6 @@
 package com.carpediem.vv.funny;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,9 +26,12 @@ public class BooksFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private ArrayList<String> mDatas;
     HomeAdapter mAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public void initData() {
         mDatas = new ArrayList<String>();
+
         for (int i = 'A'; i < 'z'; i++)
         {
             mDatas.add("" + (char) i);
@@ -38,12 +42,24 @@ public class BooksFragment extends BaseFragment {
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_books, null);
-        toolbar = (Toolbar) view.findViewById(R.id.id_toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_gif);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout);
+        initSwipeRefreshLayout();
         initRecyclerView();
         initToolbar();
 
         return view;
+    }
+
+    private void initSwipeRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
     }
 
     private void initToolbar() {
@@ -52,14 +68,13 @@ public class BooksFragment extends BaseFragment {
 
     private void initRecyclerView() {
         //设置布局管理器
-        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity,LinearLayoutManager.VERTICAL,false));
         //设置adapter
-
         recyclerView.setAdapter(mAdapter = new HomeAdapter());
         //设置Item增加、移除动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
-       // recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
     }
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
@@ -68,7 +83,7 @@ public class BooksFragment extends BaseFragment {
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    mActivity).inflate(R.layout.item_home, parent,
+                    mActivity).inflate(R.layout.item_with_data, parent,
                     false));
             return holder;
         }
@@ -93,7 +108,7 @@ public class BooksFragment extends BaseFragment {
             public MyViewHolder(View view)
             {
                 super(view);
-                tv = (TextView) view.findViewById(R.id.id_num);
+                tv = (TextView) view.findViewById(R.id.text_content);
             }
         }
     }

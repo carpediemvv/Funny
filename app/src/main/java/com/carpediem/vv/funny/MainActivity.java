@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager supportFragmentManager;
 
     private FragmentTransaction fragmentTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "c4e9104738e2747a6c63855e7d2a9b7d");
         setContentView(R.layout.activity_main);
-       // Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
+        // Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
         // App Logo
         // toolbar.setLogo(R.mipmap.ic_launcher);
         // Title
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         //Navigation Icon
         //toolbar.setNavigationIcon(R.drawable.bottom_home_tab_bg);
         // toolbar.inflateMenu(R.menu.test);
-       // setSupportActionBar(toolbar);
+        // setSupportActionBar(toolbar);
        /* toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -87,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
-
-
-
             //当前的选中的tab
             @Override
             public void onTabSelected(int position) {
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         supportFragmentManager = getSupportFragmentManager();
                         fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, new DailyFragment(), "daily_fragment").commit();
+                        fragmentTransaction.replace(R.id.main_fragment, new BooksFragment(), "daily_fragment").commit();
                         break;
                     case 1:
                         supportFragmentManager = getSupportFragmentManager();
@@ -107,18 +105,18 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         supportFragmentManager = getSupportFragmentManager();
-                         fragmentTransaction = supportFragmentManager.beginTransaction();
+                        fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment, new BooksFragment(), "main_5fragment").commit();
                         break;
                     case 3:
                         supportFragmentManager = getSupportFragmentManager();
-                         fragmentTransaction = supportFragmentManager.beginTransaction();
+                        fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment, new BooksFragment(), "m2ain_fragment").commit();
                         break;
                     case 4:
                         supportFragmentManager = getSupportFragmentManager();
-                         fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, new DailyFragment(), "main_8fragment").commit();
+                        fragmentTransaction = supportFragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.main_fragment, new BooksFragment(), "main_8fragment").commit();
                         break;
 
                 }
@@ -138,13 +136,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        supportFragmentManager = getSupportFragmentManager();
+        fragmentTransaction = supportFragmentManager.beginTransaction();
+        BooksFragment booksFragment = new BooksFragment();
+        fragmentTransaction.replace(R.id.main_fragment, booksFragment, "daily_fragment").commit();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       // getMenuInflater().inflate(R.menu.test, menu);
-       // final MenuItem item = menu.findItem(R.id.ab_search);
-       // mSearchView = (SearchView) MenuItemCompat.getActionView(item);
+        // getMenuInflater().inflate(R.menu.test, menu);
+        // final MenuItem item = menu.findItem(R.id.ab_search);
+        // mSearchView = (SearchView) MenuItemCompat.getActionView(item);
 
 
         //获取了SearchView，我们就能设置其相应的属性，一开始就处于显示SearchView的状态
