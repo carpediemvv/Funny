@@ -40,7 +40,7 @@ super.initData();
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_books, null);
-        toolbar = (Toolbar) view.findViewById(R.id.id_toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_gif);
         initRecyclerView();
         initToolbar();

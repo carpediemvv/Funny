@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void init() {
+        supportFragmentManager = getSupportFragmentManager();
         /*supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentMain = (MainFragment) supportFragmentManager.findFragmentById(R.id.fl_main);
@@ -96,27 +97,27 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("tab", "onTabSelected position:" + position);
                 switch (position) {
                     case 0:
-                        supportFragmentManager = getSupportFragmentManager();
+
                         fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment, new DailyFragment(), "daily_fragment").commit();
                         break;
                     case 1:
-                        supportFragmentManager = getSupportFragmentManager();
+
                         fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment, new BooksFragment(), "main_fragment").commit();
                         break;
                     case 2:
-                        supportFragmentManager = getSupportFragmentManager();
+
                          fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment, new BooksFragment(), "main_5fragment").commit();
                         break;
                     case 3:
-                        supportFragmentManager = getSupportFragmentManager();
+
                          fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment, new BooksFragment(), "m2ain_fragment").commit();
                         break;
                     case 4:
-                        supportFragmentManager = getSupportFragmentManager();
+
                          fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment, new DailyFragment(), "main_8fragment").commit();
                         break;

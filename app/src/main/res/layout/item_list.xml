@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginTop="2dp"
+    app:elevation="1dp"
+    >
+    <!-- app:cardCornerRadius="5dp"-->
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +27,7 @@
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/text_content"
+            android:id="@+id/id_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -33,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-
+        android:src="@mipmap/ic_launcher"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,10 +78,5 @@
             android:text="评论" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="#33447788">
-
-    </LinearLayout>
 </LinearLayout>
+</android.support.v7.widget.CardView>
