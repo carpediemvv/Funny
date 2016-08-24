@@ -2,6 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--recyclerView获取的系统分割线-->
+        <item name="android:listDivider">@drawable/divider_bg</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -37,4 +39,10 @@
         <!--距离标题栏的距离-->
         <!--<item name="android:dropDownVerticalOffset">29dip</item>-->
     </style>
+
+    <style name="SmallGreyTextView">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">@dimen/textSize_small</item>
+    </style>
+
 </resources>
