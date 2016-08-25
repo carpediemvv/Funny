@@ -3,6 +3,7 @@ package Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_ITEM) {
+     /*   if (viewType == TYPE_ITEM) {
             View view = LayoutInflater.from(mActivity).inflate(R.layout.item_with_data, parent,
                     false);
             return new ItemViewHolder(view);
@@ -71,7 +72,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     false);
             return new FootViewHolder(view);
         }
-        return null;
+        return null;*/
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.item_with_data, parent, false);
+        return new ItemViewHolder(view);
 
     }
 
@@ -79,10 +82,12 @@ public class HomeAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         String textContent = mDatas.get(position).getTextContent();
         if (!textContent.isEmpty()) {
+            Log.e("bmob查询的数据",textContent+"textContent");
             ((ItemViewHolder) holder).tv.setText(textContent);
+
         }
 
-        if (holder instanceof ItemViewHolder) {
+      /*  if (holder instanceof ItemViewHolder) {
             //holder.tv.setText(data.get(position));
             if (onItemClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +107,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     }
                 });
             }
-        }
+        }*/
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -111,7 +116,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         public ItemViewHolder(View view) {
             super(view);
-            tv = (TextView) view.findViewById(R.id.id_num);
+            tv = (TextView) view.findViewById(R.id.text_content);
         }
     }
 
