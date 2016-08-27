@@ -15,6 +15,6 @@
         android:text="2016-8-23"
         android:textSize="17sp" />
 
-    <include layout="@layout/item_home"></include>
+    <include layout="@layout/item_daily"></include>
 
 </LinearLayout>

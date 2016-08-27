@@ -50,7 +50,7 @@ public class DailyFragmentDe extends BaseFragment {
 
     @Override
     public View initView() {
-        View view = View.inflate(mActivity, R.layout.fragment_daily, null);
+        View view = View.inflate(mActivity, R.layout.fragment_dailyde, null);
         myApplication = MyApplication.getInstance();
         //listview
         listView = (ListView) view.findViewById(R.id.listview);
@@ -80,7 +80,7 @@ public class DailyFragmentDe extends BaseFragment {
             }
         });
         //下拉刷新
-        swiperefresh = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
+        swiperefresh = (SwipeRefreshLayout) view.findViewById(R.id.recyclerView_gif);
         swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

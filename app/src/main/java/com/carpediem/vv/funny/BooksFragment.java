@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import Adapter.HomeAdapter;
+import Adapter.BookAdapter;
 import FunnyGIF.FunnyGif;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
@@ -34,7 +34,7 @@ public class BooksFragment extends BaseFragment {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private ArrayList<String> mDatas = new ArrayList<String>();
-    private HomeAdapter mAdapter;
+    private BookAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Handler handler  = new Handler();
 
@@ -47,21 +47,21 @@ public class BooksFragment extends BaseFragment {
     private int isLoadData;
     @Override
     public void initData() {
-
         for (int i = 'A'; i < 'z'; i++)
         {
             mDatas.add("" + (char) i);
         }
         super.initData();
+
     }
 
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_books, null);
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        //toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_gif);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout);
-        initToolbar();
+       // initToolbar();
         initRecyclerView();
         initSwipeRefreshLayout();
         return view;
@@ -75,14 +75,7 @@ public class BooksFragment extends BaseFragment {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-        queryData(curPage, STATE_MORE);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDatas.clear();
-                getFirstDataFromBmob();
-            }
-        }, 2000);
+        //下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -91,8 +84,7 @@ public class BooksFragment extends BaseFragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mDatas.clear();
-                        getFirstDataFromBmob();
+
                     }
                 }, 2);
             }
@@ -100,29 +92,12 @@ public class BooksFragment extends BaseFragment {
 
     }
 
-    private void getFirstDataFromBmob() {
-        Log.e("bmob查询的数据", curPage + "：curPage");
-
-        mAdapter.setData(arrayList);
-        mAdapter.notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    private void getDataFromBmob() {
-        Log.e("bmob查询的数据", curPage + "：curPage");
-        queryData(curPage, STATE_MORE);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    private void initToolbar() {
-        toolbar.setTitle("四叶草");
-    }
 
     private void initRecyclerView() {
         //设置布局管理器
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         //设置adapter
-        mAdapter = new HomeAdapter(mActivity,arrayList);
+        mAdapter = new BookAdapter(mActivity,arrayList);
         recyclerView.setAdapter(mAdapter);
         //设置Item增加、移除动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());

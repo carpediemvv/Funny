@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--recyclerView获取的系统分割线-->
-        <item name="android:listDivider">@drawable/divider_bg</item>
+       <!-- <item name="android:listDivider">@drawable/divider_bg</item>-->
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,8 +11,10 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="colorControlNormal">@color/colorControlNormal</item>
         <!--itemBackground设置menu菜单背景色-->
-        <!--<item name="android:itemBackground">#3F51B5</item>-->
-        <item name="actionOverflowMenuStyle">@style/MenuStyle</item>
+        <item name="android:itemBackground">#3F51B5</item>
+        <item name="overlapAnchor">false</item>
+
+       <!-- <item name="actionOverflowMenuStyle">@style/MenuStyle</item>-->
     </style>
 
     <style name="bottom_tab_style">

@@ -18,13 +18,13 @@ import FunnyGIF.FunnyGif;
 /**
  * Created by Administrator on 2016/8/24.
  */
-public class HomeAdapter extends RecyclerView.Adapter {
+public class BookAdapter extends RecyclerView.Adapter {
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
     private Activity mActivity;
     private List<FunnyGif> mDatas;
 
-    public HomeAdapter(Context mActivity, List<FunnyGif> data) {
+    public BookAdapter(Context mActivity, List<FunnyGif> data) {
         this.mActivity = (Activity) mActivity;
         this.mDatas = data;
     }
