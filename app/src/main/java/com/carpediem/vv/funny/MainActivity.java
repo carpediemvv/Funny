@@ -92,32 +92,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(int position) {
                 Log.i("tab", "onTabSelected position:" + position);
-              /*  switch (position) {
+               switch (position) {
                     case 0:
-
                         fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, new DailyFragment(), "daily_fragment").commit();
+                        fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "daily_fragment").commit();
                         break;
                     case 1:
-
                         fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, new BooksFragment(), "main_fragment").commit();
+                        fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "main_fragment").commit();
                         break;
                     case 2:
                          fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, new MusicFragment(), "main_5fragment").commit();
+                        fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "main_5fragment").commit();
                         break;
                     case 3:
                          fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, new VideoFragment(), "m2ain_fragment").commit();
+                        fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "m2ain_fragment").commit();
                         break;
                     case 4:
                          fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, new GameFragment(), "main_8fragment").commit();
+                        fragmentTransaction.replace(R.id.main_fragment, fragments.get(position), "main_8fragment").commit();
                         break;
 
-                }*/
-                if (fragments != null) {
+                }
+                //下面代码会造成界面重叠的情况
+              /*  if (fragments != null) {
                     if (position < fragments.size()) {
                         FragmentManager fm = getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         ft.commitAllowingStateLoss();
                     }
-                }
+                }*/
 
             }
 
@@ -157,11 +156,11 @@ public class MainActivity extends AppCompatActivity {
     }
     private ArrayList<BaseFragment> getFragments() {
 
-        fragments.add(new DailyFragment());
-        fragments.add(new BooksFragment());
-        fragments.add(new MusicFragment());
-        fragments.add(new VideoFragment());
-        fragments.add(new GameFragment());
+        fragments.add(DailyFragment.newInstance("Home"));
+        fragments.add(BooksFragment.newInstance("Books"));
+        fragments.add(MusicFragment.newInstance("Music"));
+        fragments.add(VideoFragment.newInstance("Videos"));
+        fragments.add(GameFragment.newInstance("Games"));
         return fragments;
     }
     @Override

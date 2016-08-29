@@ -1,5 +1,6 @@
 package com.carpediem.vv.funny;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -45,6 +46,15 @@ public class BooksFragment extends BaseFragment {
     private int limit = 10;        // 每页的数据是10条
     private int curPage = 0;        // 当前页的编号，从0开始
     private int isLoadData;
+
+
+    public static BooksFragment newInstance(String content) {
+        Bundle args = new Bundle();
+        args.putString("ARGS", content);
+        BooksFragment fragment = new BooksFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void initData() {
         for (int i = 'A'; i < 'z'; i++)

@@ -1,5 +1,6 @@
 package com.carpediem.vv.funny;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +27,13 @@ public class MusicFragment extends BaseFragment {
 
     private ArrayList<String> mDatas;
 
+    public static MusicFragment newInstance(String content) {
+        Bundle args = new Bundle();
+        args.putString("ARGS", content);
+        MusicFragment fragment = new MusicFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void initData() {
 

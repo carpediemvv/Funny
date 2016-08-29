@@ -93,7 +93,18 @@ public class DailyFragment extends BaseFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                queryData(0, STATE_REFRESH);
+                  handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (arrayList.size()==0){
+                            swipeRefreshLayout.setRefreshing(true);
+                        }else {
+                            mAdapter.notifyDataSetChanged();
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }, 3000);
             }
         });
 
@@ -155,11 +166,12 @@ public class DailyFragment extends BaseFragment {
             }
         }
     }
+
     /**
      * 分页获取数据
      *
      * @param page       页码
-     * @param actionType ListView的操作类型（下拉刷新、上拉加载更多）
+     * @param actionType recyclerView的操作类型（下拉刷新、上拉加载更多）
      */
     private void queryData(int page, final int actionType) {
         Log.e("bmob", "pageN:" + page + " limit:" + limit + " actionType:" + actionType);
