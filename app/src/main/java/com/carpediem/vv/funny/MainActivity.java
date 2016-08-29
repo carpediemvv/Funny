@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(int position) {
                 Log.i("tab", "onTabSelected position:" + position);
-                switch (position) {
+              /*  switch (position) {
                     case 0:
 
                         fragmentTransaction = supportFragmentManager.beginTransaction();
@@ -116,6 +116,19 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTransaction.replace(R.id.main_fragment, new GameFragment(), "main_8fragment").commit();
                         break;
 
+                }*/
+                if (fragments != null) {
+                    if (position < fragments.size()) {
+                        FragmentManager fm = getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        BaseFragment fragment = fragments.get(position);
+                        if (fragment.isAdded()) {
+                            ft.replace(R.id.main_fragment, fragment);
+                        } else {
+                            ft.add(R.id.main_fragment, fragment);
+                        }
+                        ft.commitAllowingStateLoss();
+                    }
                 }
 
             }

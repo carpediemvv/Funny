@@ -45,6 +45,7 @@ public class DailyFragment extends BaseFragment {
     private int isLoadData;
     private String lastTime;
     List<FunnyGif> arrayList = new ArrayList<FunnyGif>();
+
     public static DailyFragment newInstance(String content) {
         Bundle args = new Bundle();
         args.putString("ARGS", content);

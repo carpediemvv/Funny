@@ -2,14 +2,13 @@ package com.carpediem.vv.funny;
 
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
@@ -55,69 +54,15 @@ public class VideoFragment extends BaseFragment {
         super.initData();
     }
 
+
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_video, null);
-       // toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_gif);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout);
-       // initToolbar();
-        initRecyclerView();
-        initSwipeRefreshLayout();
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout);
+
         return view;
     }
 
-    private void initSwipeRefreshLayout() {
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(true);
-            }
-        });
-        //下拉刷新
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mDatas.clear();
-                        getFirstDataFromBmob();
-                    }
-                }, 2);
-            }
-        });
-
-    }
-
-    private void getFirstDataFromBmob() {
-        Log.e("bmob查询的数据", curPage + "：curPage");
-        queryData(0, STATE_REFRESH);
-        mAdapter.setData(arrayList);
-        mAdapter.notifyDataSetChanged();
-       // swipeRefreshLayout.setRefreshing(false);
-    }
-
-
-
-    private void initToolbar() {
-        toolbar.setTitle("四叶草");
-    }
-
-    private void initRecyclerView() {
-        //设置布局管理器
-        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        //设置adapter
-        mAdapter = new BookAdapter(mActivity,arrayList);
-        recyclerView.setAdapter(mAdapter);
-        //设置Item增加、移除动画
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //添加分割线
-        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
