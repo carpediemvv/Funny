@@ -37,7 +37,9 @@ public class DailyFragment extends BaseFragment {
     HomeAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Handler handler  = new Handler();
-
+    boolean isLoading;
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_FOOTER = 1;
     private static final int STATE_REFRESH = 0;// 下拉刷新
     private static final int STATE_MORE = 1;// 加载更多
     private int limit = 10;        // 每页的数据是10条
@@ -45,6 +47,7 @@ public class DailyFragment extends BaseFragment {
     private int isLoadData;
     private String lastTime;
     List<FunnyGif> arrayList = new ArrayList<FunnyGif>();
+    private LinearLayoutManager linearLayoutManager;
 
     public static DailyFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -60,7 +63,7 @@ public class DailyFragment extends BaseFragment {
             @Override
             public void run() {
                 if (arrayList.size()==0){
-                    swipeRefreshLayout.setRefreshing(true);
+                    //swipeRefreshLayout.setRefreshing(true);
                 }else {
                     mAdapter.notifyDataSetChanged();
                     swipeRefreshLayout.setRefreshing(false);
@@ -112,61 +115,132 @@ public class DailyFragment extends BaseFragment {
 
     private void initRecyclerView() {
         //设置布局管理器
-        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        linearLayoutManager = new LinearLayoutManager(mActivity);
+        recyclerView.setLayoutManager(linearLayoutManager);
         //设置adapter
         recyclerView.setAdapter(mAdapter = new HomeAdapter());
         //设置Item增加、移除动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
-       recyclerView.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.HORIZONTAL_LIST));
-    }
-    class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
-    {
+        recyclerView.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.HORIZONTAL_LIST));
+        //监听手指滑动
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.d("test", "StateChanged = " + newState);
 
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    mActivity).inflate(R.layout.item_home, parent,
-                    false));
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
-        {
-            if(arrayList.size()==0){
-
-            }else {
-                holder.tv.setText(arrayList.get(position).getTextContent());
             }
 
-        }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.e("test", "onScrolled");
 
+                int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
+                if (lastVisibleItemPosition + 1 == mAdapter.getItemCount()) {
+                    Log.e("test", "loading executed");
+
+                    boolean isRefreshing = swipeRefreshLayout.isRefreshing();
+                    if (isRefreshing) {
+                        mAdapter.notifyItemRemoved(mAdapter.getItemCount());
+                        return;
+                    }
+                    if (!isLoading) {
+                        isLoading = true;
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadMoreData();
+                                Log.d("test", "load more completed");
+                                isLoading = false;
+                            }
+                        }, 1000);
+                    }
+                }
+            }
+        });
+
+    }
+    class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+    {
         @Override
         public int getItemCount()
         {
-            if (arrayList.size()==0){
-                return 10;
-            }else {
-                return arrayList.size();
-            }
+            return arrayList.size() == 0 ? 10 : arrayList.size() + 1;
 
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder
+        @Override
+        public int getItemViewType(int position) {
+            if (position + 1 == getItemCount()) {
+                return TYPE_FOOTER;
+            } else {
+                return TYPE_ITEM;
+            }
+        }
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
+            if (viewType == TYPE_ITEM) {
+                View view = LayoutInflater.from(mActivity).inflate(R.layout.item_home, parent,
+                        false);
+                return new ItemViewHolder(view);
+            } else if (viewType == TYPE_FOOTER) {
+                View view = LayoutInflater.from(mActivity).inflate(R.layout.item_foot, parent,
+                        false);
+                return new FootViewHolder(view);
+            }
+            return null;
+
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if(arrayList.size()==0){
+
+            }else  if (holder instanceof ItemViewHolder) {
+                ((ItemViewHolder)holder).tv.setText(arrayList.get(position).getTextContent());
+            }else {
+
+            }
+        }
+
+         class ItemViewHolder extends RecyclerView.ViewHolder {
 
             TextView tv;
 
-            public MyViewHolder(View view)
-            {
+            public ItemViewHolder(View view) {
                 super(view);
                 tv = (TextView) view.findViewById(R.id.text_content);
             }
         }
-    }
 
+        class FootViewHolder extends RecyclerView.ViewHolder {
+
+            public FootViewHolder(View view) {
+                super(view);
+            }
+        }
+
+    }
+    private void loadMoreData() {
+
+        queryData(curPage, STATE_MORE);
+        Log.e("bmob查询的数据", curPage + "更多的护具查询：curPage");
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+                mAdapter.notifyItemRemoved(mAdapter.getItemCount());
+
+
+            }
+        }, 3000);
+
+    }
     /**
      * 分页获取数据
      *
