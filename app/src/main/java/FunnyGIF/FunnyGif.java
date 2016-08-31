@@ -9,6 +9,26 @@ import cn.bmob.v3.datatype.BmobFile;
 public class FunnyGif extends BmobObject {
     private String textContent;
     private BmobFile gifContent;
+    private String  publishTime;
+    private String  textJoke;
+    public String getTextJoke() {
+        return textJoke;
+    }
+
+    public void setTextJoke(String textJoke) {
+        this.textJoke = textJoke;
+    }
+
+
+
+    public String getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(String publishTime) {
+        this.publishTime = publishTime;
+    }
+
 
     public BmobFile getGifContent() {
         return gifContent;

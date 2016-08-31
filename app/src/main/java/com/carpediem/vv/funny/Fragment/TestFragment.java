@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Fragment;
 
 import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.carpediem.vv.funny.Base.BasePager;
+import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
 

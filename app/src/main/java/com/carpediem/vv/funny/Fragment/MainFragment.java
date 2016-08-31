@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.Base.BasePager;
+import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
 

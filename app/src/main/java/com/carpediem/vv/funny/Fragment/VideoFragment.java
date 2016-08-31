@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
+import com.carpediem.vv.funny.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

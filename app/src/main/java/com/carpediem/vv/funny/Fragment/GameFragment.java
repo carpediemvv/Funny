@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
+import com.carpediem.vv.funny.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import cn.bmob.v3.listener.FindListener;
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class BooksFragment extends BaseFragment {
+public class GameFragment extends BaseFragment {
 
 
     private Toolbar toolbar;
@@ -46,32 +47,30 @@ public class BooksFragment extends BaseFragment {
     private int limit = 10;        // 每页的数据是10条
     private int curPage = 0;        // 当前页的编号，从0开始
     private int isLoadData;
-
-
-    public static BooksFragment newInstance(String content) {
+    public static GameFragment newInstance(String content) {
         Bundle args = new Bundle();
         args.putString("ARGS", content);
-        BooksFragment fragment = new BooksFragment();
+        GameFragment fragment = new GameFragment();
         fragment.setArguments(args);
         return fragment;
     }
     @Override
     public void initData() {
+
         for (int i = 'A'; i < 'z'; i++)
         {
             mDatas.add("" + (char) i);
         }
         super.initData();
-
     }
 
     @Override
     protected View initView() {
-        View view = View.inflate(mActivity, R.layout.fragment_books, null);
-        //toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        View view = View.inflate(mActivity, R.layout.fragment_game, null);
+       // toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_gif);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout);
-       // initToolbar();
+        initToolbar();
         initRecyclerView();
         initSwipeRefreshLayout();
         return view;
@@ -94,7 +93,8 @@ public class BooksFragment extends BaseFragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
+                        mDatas.clear();
+                        getFirstDataFromBmob();
                     }
                 }, 2);
             }
@@ -102,6 +102,19 @@ public class BooksFragment extends BaseFragment {
 
     }
 
+    private void getFirstDataFromBmob() {
+        Log.e("bmob查询的数据", curPage + "：curPage");
+        queryData(0, STATE_REFRESH);
+        mAdapter.setData(arrayList);
+        mAdapter.notifyDataSetChanged();
+       // swipeRefreshLayout.setRefreshing(false);
+    }
+
+
+
+    private void initToolbar() {
+       // toolbar.setTitle("四叶草");
+    }
 
     private void initRecyclerView() {
         //设置布局管理器

@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
+import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
 

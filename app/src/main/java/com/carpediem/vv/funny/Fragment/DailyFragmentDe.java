@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Fragment;
 
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.carpediem.vv.funny.Base.BaseFragment;
+import com.carpediem.vv.funny.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

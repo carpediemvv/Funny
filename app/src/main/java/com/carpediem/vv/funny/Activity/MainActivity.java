@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +15,12 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.carpediem.vv.funny.Base.BaseFragment;
+import com.carpediem.vv.funny.Fragment.BooksFragment;
+import com.carpediem.vv.funny.Fragment.DailyFragment;
+import com.carpediem.vv.funny.Fragment.GameFragment;
+import com.carpediem.vv.funny.Fragment.MusicFragment;
+import com.carpediem.vv.funny.Fragment.VideoFragment;
+import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
 

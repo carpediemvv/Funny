@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="30dp"
-                android:background="#22000000"
+
                  />
 
 

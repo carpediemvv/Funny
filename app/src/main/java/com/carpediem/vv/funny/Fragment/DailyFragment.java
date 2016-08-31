@@ -1,4 +1,4 @@
-package com.carpediem.vv.funny;
+package com.carpediem.vv.funny.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,11 +10,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.carpediem.vv.funny.Activity.CommentActivity;
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.Base.DividerItemDecoration;
+import com.carpediem.vv.funny.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import FunnyGIF.FunnyGif;
+import Utils.IntentUtils;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -39,7 +46,9 @@ public class DailyFragment extends BaseFragment {
     private Handler handler  = new Handler();
     boolean isLoading;
     private static final int TYPE_ITEM = 0;
-    private static final int TYPE_FOOTER = 1;
+    private static final int TYPE_ONE = 1;
+    private static final int TYPE_TWO = 2;
+    private static final int TYPE_FOOTER = 0;
     private static final int STATE_REFRESH = 0;// 下拉刷新
     private static final int STATE_MORE = 1;// 加载更多
     private int limit = 10;        // 每页的数据是10条
@@ -175,22 +184,28 @@ public class DailyFragment extends BaseFragment {
         public int getItemViewType(int position) {
             if (position + 1 == getItemCount()) {
                 return TYPE_FOOTER;
-            } else {
-                return TYPE_ITEM;
+            } else if (position%2==0){
+                return TYPE_TWO;
+            }else {
+                return TYPE_ONE;
             }
         }
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            if (viewType == TYPE_ITEM) {
-                View view = LayoutInflater.from(mActivity).inflate(R.layout.item_home, parent,
-                        false);
-                return new ItemViewHolder(view);
-            } else if (viewType == TYPE_FOOTER) {
-                View view = LayoutInflater.from(mActivity).inflate(R.layout.item_foot, parent,
-                        false);
-                return new FootViewHolder(view);
+            View view;
+            switch (viewType){
+                case 0 :
+                    view = LayoutInflater.from(mActivity).inflate(R.layout.item_foot, parent, false);
+                    return new FootViewHolder(view);
+                case 1:
+                    view = LayoutInflater.from(mActivity).inflate(R.layout.item_daily_with_text, parent, false);
+                    return new TextViewHolder(view);
+                case 2:
+                    view = LayoutInflater.from(mActivity).inflate(R.layout.item_with_data, parent, false);
+                    return new ItemViewHolder(view);
             }
+
             return null;
 
         }
@@ -201,21 +216,79 @@ public class DailyFragment extends BaseFragment {
 
             }else  if (holder instanceof ItemViewHolder) {
                 ((ItemViewHolder)holder).tv.setText(arrayList.get(position).getTextContent());
-            }else {
+                ((ItemViewHolder)holder).tvTime.setText(arrayList.get(position).getCreatedAt());
 
+                if (arrayList.get(position).getGifContent() != null) {
+                    Glide.with(mActivity)
+                            .load(arrayList.get(position).getGifContent().getUrl())
+                            .fitCenter()
+                            .placeholder(R.mipmap.ic_launcher)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((ItemViewHolder)holder).imageView);
+                }
+                ((ItemViewHolder)holder).buttonLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mActivity, "正在开发中", Toast.LENGTH_SHORT).show();
+                    }
+                }); ((ItemViewHolder)holder).buttonDislike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mActivity, "正在开发中", Toast.LENGTH_SHORT).show();
+                    }
+                }); ((ItemViewHolder)holder).buttonShare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mActivity, "正在开发中", Toast.LENGTH_SHORT).show();
+                    }
+                }); ((ItemViewHolder)holder).buttonComment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(mActivity, "正在开发中", Toast.LENGTH_SHORT).show();
+                        IntentUtils.startActivity(mActivity, CommentActivity.class);
+                    }
+                });
+            }else if (holder instanceof TextViewHolder){
+
+                ((TextViewHolder)holder).tv.setText(arrayList.get(position).getTextJoke());
             }
         }
 
          class ItemViewHolder extends RecyclerView.ViewHolder {
 
-            TextView tv;
-
+             TextView tv;
+             TextView tvTime;
+             ImageView imageView;
+             Button buttonLike ;
+             Button buttonDislike;
+             Button buttonShare ;
+             Button buttonComment;
             public ItemViewHolder(View view) {
                 super(view);
                 tv = (TextView) view.findViewById(R.id.text_content);
+                tvTime = (TextView) view.findViewById(R.id.base_swipe_group_item_time);
+                imageView = (ImageView) view.findViewById(R.id.image_gif);
+                 buttonLike = (Button) view.findViewById(R.id.button_like);
+                 buttonDislike = (Button) view.findViewById(R.id.button_dislike);
+                 buttonShare = (Button) view.findViewById(R.id.button_share);
+                 buttonComment = (Button) view.findViewById(R.id.button_comment);
             }
         }
-
+        class TextViewHolder extends RecyclerView.ViewHolder {
+            TextView tv;
+            Button buttonLike ;
+            Button buttonDislike;
+            Button buttonShare ;
+            Button buttonComment;
+            public TextViewHolder(View view) {
+                super(view);
+                tv = (TextView) view.findViewById(R.id.text_joke);
+                buttonLike = (Button) view.findViewById(R.id.button_like);
+                buttonDislike = (Button) view.findViewById(R.id.button_dislike);
+                buttonShare = (Button) view.findViewById(R.id.button_share);
+                buttonComment = (Button) view.findViewById(R.id.button_comment);
+            }
+        }
         class FootViewHolder extends RecyclerView.ViewHolder {
 
             public FootViewHolder(View view) {
