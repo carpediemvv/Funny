@@ -1,8 +1,11 @@
 package com.carpediem.vv.funny.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,8 +18,14 @@ import android.widget.TextView;
 import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import FunnyGIF.Comment;
+import FunnyGIF.FunnyGif;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Administrator on 2016/8/31.
@@ -26,11 +35,15 @@ public class CommentActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<Comment> arrayList=new ArrayList<>();
     private CommentAdapter commentAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_activity);
+        initData();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.SwipeRefreshLayout);
+        initSwipeRefreshLayout();
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +54,7 @@ public class CommentActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.comment_listview);
         TextView tvEmpty = (TextView) findViewById(R.id.tv_empty);
         listView.setEmptyView(tvEmpty);
-        initListView();
+
         Button btCommit = (Button) findViewById(R.id.bt_commit);
         final EditText etComment = (EditText) findViewById(R.id.et_comment);
         assert btCommit != null;
@@ -55,6 +68,47 @@ public class CommentActivity extends AppCompatActivity {
                 arrayList.add(comment);
                 commentAdapter.notifyDataSetChanged();
                 etComment.setText("");
+            }
+        });
+    }
+
+    private void initSwipeRefreshLayout() {
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        });
+    }
+
+    private void initData() {
+        Log.e("bmob查询的数据","CommentAcitityinitData");
+        BmobQuery<Comment> query = new BmobQuery<Comment>();
+//用此方式可以构造一个BmobPointer对象。只需要设置objectId就行
+        FunnyGif funnyGif = new FunnyGif();
+        Intent intent = getIntent();
+        String stringExtra = intent.getStringExtra("ObjectId");
+        Log.e("bmob查询的数据",stringExtra+"id");
+        funnyGif.setObjectId(stringExtra);
+        query.addWhereEqualTo("funnyGif",new BmobPointer(funnyGif));
+//希望同时查询该评论的发布者的信息，以及该帖子的作者的信息，这里用到上面`include`的并列对象查询和内嵌对象的查询
+       // query.include("user,post.author");
+        query.findObjects(new FindListener<Comment>() {
+
+            @Override
+            public void done(List<Comment> objects, BmobException e) {
+                for (Comment comment : objects) {
+                    Log.e("bmob查询的数据",comment.getContent()+ "更多的护具查询：curPage");
+                    arrayList.add(comment);
+                    swipeRefreshLayout.setRefreshing(false);
+                    initListView();
+                }
             }
         });
     }
@@ -94,7 +148,7 @@ public class CommentActivity extends AppCompatActivity {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-           if (true) {
+           if (arrayList!=null) {
 
                 viewHolder.text_name.setText(android.os.Build.MODEL);
                 viewHolder.text_comment.setText(arrayList.get(position).getContent());

@@ -1,5 +1,6 @@
 package com.carpediem.vv.funny.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,7 +30,6 @@ import java.util.Date;
 import java.util.List;
 
 import FunnyGIF.FunnyGif;
-import Utils.IntentUtils;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -144,7 +144,7 @@ public class DailyFragment extends BaseFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.e("test", "onScrolled");
+
 
                 int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
                 if (lastVisibleItemPosition + 1 == mAdapter.getItemCount()) {
@@ -211,7 +211,7 @@ public class DailyFragment extends BaseFragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             if(arrayList.size()==0){
 
             }else  if (holder instanceof ItemViewHolder) {
@@ -245,7 +245,10 @@ public class DailyFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         //Toast.makeText(mActivity, "正在开发中", Toast.LENGTH_SHORT).show();
-                        IntentUtils.startActivity(mActivity, CommentActivity.class);
+                        Intent mIntent=new Intent(mActivity,CommentActivity.class);
+                        mIntent.putExtra("ObjectId",arrayList.get(position).getObjectId());
+                        mActivity.startActivity(mIntent);
+                       // IntentUtils.startActivity(mActivity, CommentActivity.class);
                     }
                 });
             }else if (holder instanceof TextViewHolder){
