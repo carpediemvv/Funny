@@ -325,7 +325,6 @@ public class DailyFragment extends BaseFragment {
      */
     private void queryData(int page, final int actionType) {
         Log.e("bmob", "pageN:" + page + " limit:" + limit + " actionType:" + actionType);
-
         BmobQuery<FunnyGif> query = new BmobQuery<>();
         // 按时间降序查询
         query.order("-createdAt");

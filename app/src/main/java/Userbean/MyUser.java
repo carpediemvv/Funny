@@ -1,4 +1,4 @@
-package FunnyGIF;
+package Userbean;
 
 import cn.bmob.v3.BmobUser;
 

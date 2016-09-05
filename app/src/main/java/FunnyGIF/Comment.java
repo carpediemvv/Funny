@@ -1,5 +1,6 @@
 package FunnyGIF;
 
+import Userbean.MyUser;
 import cn.bmob.v3.BmobObject;
 
 /**

@@ -7,6 +7,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +25,13 @@ import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
 
+import Userbean.MyUser;
+import Utils.CacheUtils;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
+import cn.bmob.v3.listener.SaveListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,7 +80,43 @@ public class MainActivity extends AppCompatActivity {
         init();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
+        initUser();
+    }
 
+    private void initUser() {
+
+        Boolean login = CacheUtils.getBoolean(this, "login", false);
+        if(login){
+
+        }else {
+            TelephonyManager TelephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+            String szImei = TelephonyMgr.getDeviceId();
+            final MyUser bu = new MyUser();
+            bu.setUsername(szImei);
+            bu.setPassword("123456");
+            bu.setModel(android.os.Build.MODEL);
+            //注意：不能用save方法进行注册
+            bu.signUp(new SaveListener<MyUser>() {
+                @Override
+                public void done(MyUser s, BmobException e) {
+                    if (e == null) {
+                        Log.i("bmob", "注册成功"+bu.getObjectId());
+                        CacheUtils.putBoolean(MainActivity.this,"login",true);
+                    } else {
+                        Log.i("bmob", "注册失败");
+                    }
+                }
+            });
+            Log.i("bmob", "注册12121成功"+bu.getObjectId());
+            BmobUser.loginByAccount(szImei, "123456", new LogInListener<MyUser>() {
+                @Override
+                public void done(MyUser user, BmobException e) {
+                    if(user!=null){
+                        Log.i("bmob","用户登陆成功");
+                    }
+                }
+            });
+        }
     }
 
     private void init() {

@@ -24,6 +24,7 @@
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.SwipeRefreshLayout
        android:layout_marginTop="58dp"
+        android:layout_marginBottom="58dp"
         android:id="@+id/SwipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,7 +47,7 @@
        android:text="还没有人评论，快来抢沙发吧"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         android:orientation="horizontal"
         android:background="@android:color/white"
         android:layout_gravity="bottom">

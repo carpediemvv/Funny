@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="6dp"
 
-        android:text="张三" />
+        android:text="默认" />
     <TextView
         android:id="@+id/tv_comment"
         android:layout_width="match_parent"
