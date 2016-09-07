@@ -25,7 +25,7 @@ import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
 
-import Userbean.MyUser;
+import bean.Userbean.MyUser;
 import Utils.CacheUtils;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;

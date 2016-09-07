@@ -3,17 +3,17 @@ package Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.carpediem.vv.funny.R;
 
 import java.util.List;
 
-import FunnyGIF.FunnyGif;
+import bean.FunnyGIF.FunnyGif;
 
 /**
  * Created by Administrator on 2016/8/24.
@@ -48,7 +48,7 @@ public class BookAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mDatas.size() == 0 ? 0 : mDatas.size() + 1;
+        return mDatas.size() == 0 ? 10 : mDatas.size() + 1;
     }
 
     @Override
@@ -73,19 +73,19 @@ public class BookAdapter extends RecyclerView.Adapter {
             return new FootViewHolder(view);
         }
         return null;*/
-        View view = LayoutInflater.from(mActivity).inflate(R.layout.item_with_data, parent, false);
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.item_books, parent, false);
         return new ItemViewHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        String textContent = mDatas.get(position).getTextContent();
-        if (!textContent.isEmpty()) {
+//        String textContent = mDatas.get(position).getTextContent();
+      /*  if (!textContent.isEmpty()) {
             Log.e("bmob查询的数据",textContent+"textContent");
-            ((ItemViewHolder) holder).tv.setText(textContent);
+            ((ItemViewHolder) holder).textCategory.setText(textContent);
 
-        }
+        }*/
 
       /*  if (holder instanceof ItemViewHolder) {
             //holder.tv.setText(data.get(position));
@@ -112,11 +112,17 @@ public class BookAdapter extends RecyclerView.Adapter {
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv;
+        TextView textCategory;
+        private final ImageView imageViewOne;
+        private final ImageView imageViewTwo;
+        private final ImageView imageViewThree;
 
         public ItemViewHolder(View view) {
             super(view);
-            tv = (TextView) view.findViewById(R.id.text_content);
+            textCategory = (TextView) view.findViewById(R.id.text_category);
+            imageViewOne = (ImageView) view.findViewById(R.id.book_one);
+            imageViewTwo = (ImageView) view.findViewById(R.id.book_two);
+            imageViewThree = (ImageView) view.findViewById(R.id.book_three);
         }
     }
 

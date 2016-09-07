@@ -1,4 +1,4 @@
-package Userbean;
+package bean.Userbean;
 
 import cn.bmob.v3.BmobUser;
 
