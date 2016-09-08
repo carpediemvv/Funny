@@ -46,5 +46,8 @@
         <item name="android:textColor">@color/grey</item>
         <item name="android:textSize">@dimen/textSize_small</item>
     </style>
-
+    <style name="MyButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="colorButtonNormal">#99303F9F</item>
+    </style>
 </resources>

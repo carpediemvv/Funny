@@ -8,12 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.carpediem.vv.funny.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import bean.FunnyGIF.FunnyGif;
+import bean.BookBean.Book;
+import bean.BookBean.BookTopic;
 
 /**
  * Created by Administrator on 2016/8/24.
@@ -22,15 +27,18 @@ public class BookAdapter extends RecyclerView.Adapter {
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
     private Activity mActivity;
-    private List<FunnyGif> mDatas;
+    private List<BookTopic> mDatas;
+    private ArrayList<Book> bookList;
 
-    public BookAdapter(Context mActivity, List<FunnyGif> data) {
+    public BookAdapter(Context mActivity, List<BookTopic> data, ArrayList<Book> bookList) {
         this.mActivity = (Activity) mActivity;
         this.mDatas = data;
+        this.bookList = bookList;
+
     }
 
-     public void setData( List<FunnyGif> data) {
-         this.mDatas = data;
+    public void setData(List<BookTopic> data) {
+        this.mDatas = data;
     }
 
     public interface OnItemClickListener {
@@ -48,7 +56,7 @@ public class BookAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mDatas.size() == 0 ? 10 : mDatas.size() + 1;
+        return mDatas.size();
     }
 
     @Override
@@ -63,7 +71,7 @@ public class BookAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-     /*   if (viewType == TYPE_ITEM) {
+     /*     if (viewType == TYPE_ITEM) {
             View view = LayoutInflater.from(mActivity).inflate(R.layout.item_with_data, parent,
                     false);
             return new ItemViewHolder(view);
@@ -80,42 +88,69 @@ public class BookAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-//        String textContent = mDatas.get(position).getTextContent();
-      /*  if (!textContent.isEmpty()) {
-            Log.e("bmob查询的数据",textContent+"textContent");
+        ArrayList<Book> list = new ArrayList<Book>();
+        String textContent = mDatas.get(position).getTopicName();
+        if (!textContent.isEmpty()) {
             ((ItemViewHolder) holder).textCategory.setText(textContent);
-
-        }*/
-
-      /*  if (holder instanceof ItemViewHolder) {
-            //holder.tv.setText(data.get(position));
-            if (onItemClickListener != null) {
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int position = holder.getLayoutPosition();
-                        onItemClickListener.onItemClick(holder.itemView, position);
-                    }
-                });
-
-                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        int position = holder.getLayoutPosition();
-                        onItemClickListener.onItemLongClick(holder.itemView, position);
-                        return false;
-                    }
-                });
+        }
+        for (int i = 0; i < bookList.size(); i++) {
+            if (bookList.get(i).getBookLabel().equals(mDatas.get(position).getTopicName())) {
+                list.add(bookList.get(i));
             }
-        }*/
+        }
+        if (list.size() > 0) {
+            ((ItemViewHolder) holder).textOneName.setText(list.get(0).getBookName());
+            ((ItemViewHolder) holder).textTwoName.setText(list.get(1).getBookName());
+            ((ItemViewHolder) holder).textThreeName.setText(list.get(2).getBookName());
+            Glide.with(mActivity)
+                    .load(list.get(0).getBookImage())
+                    .fitCenter()
+                    .placeholder(R.mipmap.ic_launcher)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(((ItemViewHolder) holder).imageViewOne);
+            Glide.with(mActivity)
+                    .load(list.get(1).getBookImage())
+                    .fitCenter()
+                    .placeholder(R.mipmap.ic_launcher)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(((ItemViewHolder) holder).imageViewTwo);
+            Glide.with(mActivity)
+                    .load(list.get(2).getBookImage())
+                    .fitCenter()
+                    .placeholder(R.mipmap.ic_launcher)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(((ItemViewHolder) holder).imageViewThree);
+        }
+        ((ItemViewHolder) holder).imageViewOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "tupian1", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ((ItemViewHolder) holder).imageViewTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "tupian2", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ((ItemViewHolder) holder).imageViewThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "tupian3", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textCategory;
+        private final TextView textCategory;
         private final ImageView imageViewOne;
         private final ImageView imageViewTwo;
         private final ImageView imageViewThree;
+        private final TextView textOneName;
+        private final TextView textTwoName;
+        private final TextView textThreeName;
 
         public ItemViewHolder(View view) {
             super(view);
@@ -123,6 +158,9 @@ public class BookAdapter extends RecyclerView.Adapter {
             imageViewOne = (ImageView) view.findViewById(R.id.book_one);
             imageViewTwo = (ImageView) view.findViewById(R.id.book_two);
             imageViewThree = (ImageView) view.findViewById(R.id.book_three);
+            textOneName = (TextView) view.findViewById(R.id.book_one_name);
+            textTwoName = (TextView) view.findViewById(R.id.book_two_name);
+            textThreeName = (TextView) view.findViewById(R.id.book_three_name);
         }
     }
 

@@ -352,6 +352,7 @@ public class DailyFragment extends BaseFragment {
         } else {
             curPage = 0;
             query.setSkip(curPage);
+
         }
         // 设置每页数据个数
         query.setLimit(limit);

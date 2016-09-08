@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -19,8 +20,12 @@ import java.util.List;
 
 import Adapter.BookAdapter;
 import bean.BookBean.Book;
+import bean.BookBean.BookTopic;
 import bean.FunnyGIF.FunnyGif;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Administrator on 2016/6/28.
@@ -42,6 +47,8 @@ public class BooksFragment extends BaseFragment {
     private int limit = 10;        // 每页的数据是10条
     private int curPage = 0;        // 当前页的编号，从0开始
     private int isLoadData;
+    private ArrayList<BookTopic> bookTopics= new ArrayList<>();
+    private ArrayList<Book> bookList= new ArrayList<>();
 
 
     public static BooksFragment newInstance(String content) {
@@ -53,17 +60,66 @@ public class BooksFragment extends BaseFragment {
     }
     @Override
     public void initData() {
-        BmobQuery<Book> query = new BmobQuery<Book>();
+        BmobQuery<BookTopic> query = new BmobQuery<BookTopic>();
+        query.findObjects(new FindListener<BookTopic>() {
+            @Override
+            public void done(List<BookTopic> object, BmobException e) {
+                if(e==null){
+                    bookTopics.clear();
+                    for (BookTopic bookTopic : object) {
+                        //获得playerName的信息
+                        bookTopic.getTopicName();
+                        //获得数据的objectId信息
+                        bookTopic.getObjectId();
+                        //获得createdAt数据创建时间（注意是：createdAt，不是createAt）
+                        bookTopic.getCreatedAt();
+                        Log.e("bookTopic","bookTopic查询的数据"+bookTopic.getTopicName()+"   ID   "+bookTopic.getObjectId());
+
+                        bookTopics.add(bookTopic);
+                        nextquery();
+                    }
+                    initRecyclerView();
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+
+            private void nextquery() {
+                if(bookTopics!=null){
+                    for (int i = 0; i <bookTopics.size() ; i++) {
+                        BmobQuery<Book> query1 = new BmobQuery<Book>();
+                        BookTopic bookTopic = new BookTopic();
+                        bookTopic.setObjectId(bookTopics.get(i).getObjectId());
+                        query1.addWhereEqualTo("topic",new BmobPointer(bookTopic));
+                        query1.findObjects(new FindListener<Book>() {
+                            @Override
+                            public void done(List<Book> objects,BmobException e) {
+                                for (Book book : objects) {
+                                    Log.e("bookTopic","bookTopic查询的数据"+book.getBookName()+book.getBookInfo());
+                                    bookList.add(book);
+                                }
+                                swipeRefreshLayout.setRefreshing(false);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+            }
+
+        });
+
 
 
     }
+
+
 
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_books, null);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_gif);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout);
-        initRecyclerView();
+
         initSwipeRefreshLayout();
         return view;
     }
@@ -85,9 +141,9 @@ public class BooksFragment extends BaseFragment {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }, 2);
+                }, 2000);
             }
         });
 
@@ -98,7 +154,7 @@ public class BooksFragment extends BaseFragment {
         //设置布局管理器
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         //设置adapter
-        mAdapter = new BookAdapter(mActivity,arrayList);
+        mAdapter = new BookAdapter(mActivity,bookTopics,bookList);
         recyclerView.setAdapter(mAdapter);
         //设置Item增加、移除动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());

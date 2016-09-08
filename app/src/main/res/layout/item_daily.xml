@@ -34,8 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingLeft="30dp"
-                android:textSize="18sp"
-                 />
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -58,6 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:theme="@style/MyButton"
                 android:text="赞" />
 
             <Button
@@ -65,12 +65,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:theme="@style/MyButton"
                 android:text="反对" />
 
             <Button
                 android:id="@+id/button_share"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:theme="@style/MyButton"
                 android:layout_weight="1"
                 android:text="分享" />
 
@@ -78,6 +80,7 @@
                 android:id="@+id/button_comment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:theme="@style/MyButton"
                 android:layout_weight="1"
                 android:text="评论" />
         </LinearLayout>

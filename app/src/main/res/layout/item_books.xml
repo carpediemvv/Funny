@@ -41,43 +41,74 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="200dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/book_one"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="190dp"
+                android:layout_height="200dp"
                 android:layout_weight="1"
-                android:src="@mipmap/bookbg" />
-
-            <ImageView
-                android:id="@+id/book_two"
-
+                android:orientation="vertical"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:paddingRight="8dp">
+                <ImageView
+                    android:id="@+id/book_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:src="@mipmap/bookbg" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/book_one_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="one" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="190dp"
+                android:layout_height="200dp"
                 android:layout_weight="1"
-                android:src="@mipmap/bookbg" />
-
-            <ImageView
-                android:id="@+id/book_three"
-
+                android:orientation="vertical"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:paddingRight="8dp">
+                <ImageView
+                    android:id="@+id/book_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:src="@mipmap/bookbg" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/book_two_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="two" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="190dp"
+                android:layout_height="200dp"
                 android:layout_weight="1"
-                android:src="@mipmap/bookbg" />
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <ImageView
+                    android:id="@+id/book_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:src="@mipmap/bookbg" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/book_three_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="three" />
+            </LinearLayout>
         </LinearLayout>
 
         <Button
             android:id="@+id/button_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/MyButton"
             android:text="查看" />
     </LinearLayout>
 </android.support.v7.widget.CardView>
