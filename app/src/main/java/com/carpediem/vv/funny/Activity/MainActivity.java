@@ -25,8 +25,8 @@ import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
 
-import bean.Userbean.MyUser;
 import Utils.CacheUtils;
+import bean.Userbean.MyUser;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -43,26 +43,28 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private FragmentManager supportFragmentManager  = getSupportFragmentManager();
-
     private ArrayList<BaseFragment> fragments = new ArrayList<>();
     private FragmentTransaction fragmentTransaction;
+    public static BottomNavigationBar bottomNavigationBar;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "c4e9104738e2747a6c63855e7d2a9b7d");
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //toolbar = (Toolbar) findViewById(R.id.toolbar);
         // App Logo
         // toolbar.setLogo(R.mipmap.ic_launcher);
         // Title
-        toolbar.setTitle("四叶草");
+       // toolbar.setTitle("四叶草");
         // Sub Title
         //toolbar.setSubtitle("Sub title");
         //Navigation Icon
         //toolbar.setNavigationIcon(R.drawable.bottom_home_tab_bg);
-         toolbar.inflateMenu(R.menu.test);
+       // toolbar.inflateMenu(R.menu.test);
        // setSupportActionBar(toolbar);
-       toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+       /* toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             }
-        });
+        });*/
 
         init();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
 
-        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
 
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_white_24dp, "每日").setActiveColorResource(R.color.colorPrimary))
@@ -145,22 +147,27 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "daily_fragment").commit();
+                       // toolbar.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "main_fragment").commit();
+                      //  toolbar.setVisibility(View.GONE);
                         break;
                     case 2:
                          fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "main_5fragment").commit();
+                      //  toolbar.setVisibility(View.GONE);
                         break;
                     case 3:
                          fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "m2ain_fragment").commit();
+                      //  toolbar.setVisibility(View.GONE);
                         break;
                     case 4:
                          fragmentTransaction = supportFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.main_fragment, fragments.get(position), "main_8fragment").commit();
+                      //  toolbar.setVisibility(View.GONE);
                         break;
 
                 }
@@ -249,12 +256,12 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_publish) {
             Toast.makeText(MainActivity.this, "投稿功能正在开发", Toast.LENGTH_SHORT).show();
-
+            bottomNavigationBar.hide();
         }
 
         if (id == R.id.menu_refresh) {
             Toast.makeText(MainActivity.this, "分享功能正在开发", Toast.LENGTH_SHORT).show();
-
+            bottomNavigationBar.show();
 
         }
         return super.onOptionsItemSelected(item);

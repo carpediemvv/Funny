@@ -7,8 +7,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.carpediem.vv.funny.Activity.CommentActivity;
+import com.carpediem.vv.funny.Activity.MainActivity;
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.Base.DividerItemDecoration;
 import com.carpediem.vv.funny.R;
@@ -33,6 +36,7 @@ import bean.FunnyGIF.FunnyGif;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import weight.BottomTrackListener;
 
 /**
  * Created by Administrator on 2016/6/28.
@@ -57,6 +61,7 @@ public class DailyFragment extends BaseFragment {
     private String lastTime;
     List<FunnyGif> arrayList = new ArrayList<FunnyGif>();
     private LinearLayoutManager linearLayoutManager;
+    private Toolbar toolbar;
 
     public static DailyFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -85,7 +90,8 @@ public class DailyFragment extends BaseFragment {
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_daily, null);
-
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        initToolbar();
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout);
         initSwipeRefreshLayout();
 
@@ -93,6 +99,26 @@ public class DailyFragment extends BaseFragment {
         initRecyclerView();
 
         return view;
+    }
+
+    private void initToolbar() {
+        toolbar.setTitle("四叶草");
+        toolbar.inflateMenu(R.menu.test);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                switch (itemId) {
+                    case R.id.action_publish:
+                        Toast.makeText(mActivity, "正在开发" + itemId, Toast.LENGTH_SHORT).show();
+                    case R.id.menu_refresh:
+                        Toast.makeText(mActivity, "正在开发" + itemId, Toast.LENGTH_SHORT).show();
+
+                }
+                return true;
+            }
+        });
+
     }
 
     private void initSwipeRefreshLayout() {
@@ -133,6 +159,7 @@ public class DailyFragment extends BaseFragment {
         //添加分割线
         recyclerView.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.HORIZONTAL_LIST));
         //监听手指滑动
+        recyclerView.addOnScrollListener(new BottomTrackListener(MainActivity.bottomNavigationBar));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -326,6 +353,8 @@ public class DailyFragment extends BaseFragment {
     private void queryData(int page, final int actionType) {
         Log.e("bmob", "pageN:" + page + " limit:" + limit + " actionType:" + actionType);
         BmobQuery<FunnyGif> query = new BmobQuery<>();
+        // 先从缓存获取数据，如果没有，再从网络获取。
+        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
         // 按时间降序查询
         query.order("-createdAt");
 

@@ -2,16 +2,18 @@ package Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.carpediem.vv.funny.Activity.BookDetailActivity;
 import com.carpediem.vv.funny.R;
 
 import java.util.ArrayList;
@@ -87,8 +89,8 @@ public class BookAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        ArrayList<Book> list = new ArrayList<Book>();
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        final ArrayList<Book> list = new ArrayList<Book>();
         String textContent = mDatas.get(position).getTopicName();
         if (!textContent.isEmpty()) {
             ((ItemViewHolder) holder).textCategory.setText(textContent);
@@ -105,38 +107,45 @@ public class BookAdapter extends RecyclerView.Adapter {
             Glide.with(mActivity)
                     .load(list.get(0).getBookImage())
                     .fitCenter()
-                    .placeholder(R.mipmap.ic_launcher)
+
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(((ItemViewHolder) holder).imageViewOne);
             Glide.with(mActivity)
                     .load(list.get(1).getBookImage())
                     .fitCenter()
-                    .placeholder(R.mipmap.ic_launcher)
+
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(((ItemViewHolder) holder).imageViewTwo);
             Glide.with(mActivity)
                     .load(list.get(2).getBookImage())
                     .fitCenter()
-                    .placeholder(R.mipmap.ic_launcher)
+
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(((ItemViewHolder) holder).imageViewThree);
         }
         ((ItemViewHolder) holder).imageViewOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mActivity, "tupian1", Toast.LENGTH_SHORT).show();
+
+                Intent mIntent=new Intent(mActivity,BookDetailActivity.class);
+                mIntent.putExtra("text_book",list.get(0).getBookInfo());
+                mActivity.startActivity(mIntent);
             }
         });
         ((ItemViewHolder) holder).imageViewTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mActivity, "tupian2", Toast.LENGTH_SHORT).show();
+                Intent mIntent=new Intent(mActivity,BookDetailActivity.class);
+                mIntent.putExtra("text_book",list.get(1).getBookInfo());
+                mActivity.startActivity(mIntent);
             }
         });
         ((ItemViewHolder) holder).imageViewThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mActivity, "tupian3", Toast.LENGTH_SHORT).show();
+                Intent mIntent=new Intent(mActivity,BookDetailActivity.class);
+                mIntent.putExtra("text_book",list.get(2).getBookInfo());
+                mActivity.startActivity(mIntent);
             }
         });
 

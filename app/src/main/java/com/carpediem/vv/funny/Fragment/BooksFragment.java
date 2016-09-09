@@ -6,7 +6,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +20,6 @@ import java.util.List;
 import Adapter.BookAdapter;
 import bean.BookBean.Book;
 import bean.BookBean.BookTopic;
-import bean.FunnyGIF.FunnyGif;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
@@ -33,20 +31,11 @@ import cn.bmob.v3.listener.FindListener;
 public class BooksFragment extends BaseFragment {
 
 
-    private Toolbar toolbar;
+
     private RecyclerView recyclerView;
-    private ArrayList<String> mDatas = new ArrayList<String>();
     private BookAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Handler handler  = new Handler();
-
-    List<FunnyGif> arrayList = new ArrayList<FunnyGif>();
-    private static final int STATE_REFRESH = 0;// 下拉刷新
-    private static final int STATE_MORE = 1;// 加载更多
-    private String lastTime;
-    private int limit = 10;        // 每页的数据是10条
-    private int curPage = 0;        // 当前页的编号，从0开始
-    private int isLoadData;
     private ArrayList<BookTopic> bookTopics= new ArrayList<>();
     private ArrayList<Book> bookList= new ArrayList<>();
 
@@ -61,18 +50,19 @@ public class BooksFragment extends BaseFragment {
     @Override
     public void initData() {
         BmobQuery<BookTopic> query = new BmobQuery<BookTopic>();
+        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
         query.findObjects(new FindListener<BookTopic>() {
             @Override
             public void done(List<BookTopic> object, BmobException e) {
                 if(e==null){
                     bookTopics.clear();
                     for (BookTopic bookTopic : object) {
-                        //获得playerName的信息
-                        bookTopic.getTopicName();
+
+
                         //获得数据的objectId信息
                         bookTopic.getObjectId();
                         //获得createdAt数据创建时间（注意是：createdAt，不是createAt）
-                        bookTopic.getCreatedAt();
+
                         Log.e("bookTopic","bookTopic查询的数据"+bookTopic.getTopicName()+"   ID   "+bookTopic.getObjectId());
 
                         bookTopics.add(bookTopic);
@@ -88,6 +78,7 @@ public class BooksFragment extends BaseFragment {
                 if(bookTopics!=null){
                     for (int i = 0; i <bookTopics.size() ; i++) {
                         BmobQuery<Book> query1 = new BmobQuery<Book>();
+                        query1.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
                         BookTopic bookTopic = new BookTopic();
                         bookTopic.setObjectId(bookTopics.get(i).getObjectId());
                         query1.addWhereEqualTo("topic",new BmobPointer(bookTopic));
