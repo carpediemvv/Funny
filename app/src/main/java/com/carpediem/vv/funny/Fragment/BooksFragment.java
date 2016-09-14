@@ -6,10 +6,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.R;
@@ -38,6 +41,7 @@ public class BooksFragment extends BaseFragment {
     private Handler handler  = new Handler();
     private ArrayList<BookTopic> bookTopics= new ArrayList<>();
     private ArrayList<Book> bookList= new ArrayList<>();
+    private Toolbar toolbar;
 
 
     public static BooksFragment newInstance(String content) {
@@ -57,14 +61,10 @@ public class BooksFragment extends BaseFragment {
                 if(e==null){
                     bookTopics.clear();
                     for (BookTopic bookTopic : object) {
-
-
                         //获得数据的objectId信息
                         bookTopic.getObjectId();
                         //获得createdAt数据创建时间（注意是：createdAt，不是createAt）
-
                         Log.e("bookTopic","bookTopic查询的数据"+bookTopic.getTopicName()+"   ID   "+bookTopic.getObjectId());
-
                         bookTopics.add(bookTopic);
                         nextquery();
                     }
@@ -110,9 +110,29 @@ public class BooksFragment extends BaseFragment {
         View view = View.inflate(mActivity, R.layout.fragment_books, null);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_gif);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout);
-
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        initToolbar();
         initSwipeRefreshLayout();
         return view;
+    }
+    private void initToolbar() {
+        toolbar.setTitle("每日书屋");
+        toolbar.inflateMenu(R.menu.test);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                switch (itemId) {
+                    case R.id.action_publish:
+                        Toast.makeText(mActivity, "正在开发" + itemId, Toast.LENGTH_SHORT).show();
+                    case R.id.menu_refresh:
+                        Toast.makeText(mActivity, "正在开发" + itemId, Toast.LENGTH_SHORT).show();
+
+                }
+                return true;
+            }
+        });
+
     }
 
     private void initSwipeRefreshLayout() {

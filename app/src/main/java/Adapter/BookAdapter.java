@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,6 +128,8 @@ public class BookAdapter extends RecyclerView.Adapter {
 
                 Intent mIntent=new Intent(mActivity,BookDetailActivity.class);
                 mIntent.putExtra("text_book",list.get(0).getBookInfo());
+                mIntent.putExtra("image_book",list.get(0).getBookImage());
+                mIntent.putExtra("name_book",list.get(0).getBookName());
                 mActivity.startActivity(mIntent);
             }
         });
@@ -137,6 +138,9 @@ public class BookAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 Intent mIntent=new Intent(mActivity,BookDetailActivity.class);
                 mIntent.putExtra("text_book",list.get(1).getBookInfo());
+                mIntent.putExtra("image_book",list.get(1).getBookImage());
+                mIntent.putExtra("name_book",list.get(1).getBookName());
+
                 mActivity.startActivity(mIntent);
             }
         });
@@ -145,6 +149,9 @@ public class BookAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 Intent mIntent=new Intent(mActivity,BookDetailActivity.class);
                 mIntent.putExtra("text_book",list.get(2).getBookInfo());
+                mIntent.putExtra("image_book",list.get(2).getBookImage());
+                mIntent.putExtra("name_book",list.get(2).getBookName());
+
                 mActivity.startActivity(mIntent);
             }
         });
