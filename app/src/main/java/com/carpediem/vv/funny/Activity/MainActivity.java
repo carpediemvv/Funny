@@ -136,9 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 .initialise();
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
-
-
-
             //当前的选中的tab
             @Override
             public void onTabSelected(int position) {
@@ -256,12 +253,12 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_publish) {
             Toast.makeText(MainActivity.this, "投稿功能正在开发", Toast.LENGTH_SHORT).show();
-            bottomNavigationBar.hide();
+
         }
 
         if (id == R.id.menu_refresh) {
             Toast.makeText(MainActivity.this, "分享功能正在开发", Toast.LENGTH_SHORT).show();
-            bottomNavigationBar.show();
+
 
         }
         return super.onOptionsItemSelected(item);

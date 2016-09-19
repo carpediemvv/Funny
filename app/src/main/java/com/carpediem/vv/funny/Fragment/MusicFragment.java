@@ -1,20 +1,16 @@
 package com.carpediem.vv.funny.Fragment;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.ViewParent;
+import android.widget.ImageButton;
 
+import com.carpediem.vv.funny.Activity.MainActivity;
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.R;
-
-import java.util.ArrayList;
 
 
 /**
@@ -22,11 +18,9 @@ import java.util.ArrayList;
  */
 public class MusicFragment extends BaseFragment {
 
-
-    private Toolbar toolbar;
-    private RecyclerView recyclerView;
-
-    private ArrayList<String> mDatas;
+    private ImageButton musicPlay;
+    private ObjectAnimator mAnimator = null;
+    private Boolean isPlaying=false;
 
     public static MusicFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -35,71 +29,58 @@ public class MusicFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void initData() {
 
-        mDatas = new ArrayList<String>();
-        for (int i = 'A'; i < 'z'; i++)
-        {
-            mDatas.add("" + (char) i);
-        }
     }
 
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_music, null);
-        recyclerView = (RecyclerView) view.findViewById(R.id.id_recyclerView);
-        initRecyclerView();
+        musicPlay = (ImageButton) view.findViewById(R.id.music_play);
+        musicPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPlaying) {
+                    mAnimator = animateHide(MainActivity.bottomNavigationBar);
+                    isPlaying=false;
+                } else {
+                    mAnimator = animateShow(MainActivity.bottomNavigationBar);
+                    isPlaying=true;
+                }
+            }
+
+            {
+                if (mAnimator != null && mAnimator.isRunning()) {
+                    mAnimator.cancel();
+                }
+            }
+        });
         return view;
     }
 
-
-
-    private void initRecyclerView() {
-        //设置布局管理器
-        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        //设置adapter
-        recyclerView.setAdapter( new MusicAdapter());
-        //设置Item增加、移除动画
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //添加分割线
-        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
+    private ObjectAnimator animateShow(View view) {
+        return animationFromTo(view, view.getTranslationY(), 0);
     }
-    class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder>
-    {
 
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    mActivity).inflate(R.layout.item_music, parent,
-                    false));
-            return holder;
+    private ObjectAnimator animateHide(View view) {
+        return animationFromTo(view, view.getTranslationY(), getDistance());
+    }
+
+    private ObjectAnimator animationFromTo(View view, float start, float end) {
+        String propertyName = "translationY";
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, propertyName, start, end);
+        animator.setDuration(500);
+        animator.start();
+        return animator;
+    }
+    private int getDistance () {
+        ViewParent parent = MainActivity.bottomNavigationBar.getParent();
+        if (parent instanceof View) {
+            return ((View)parent).getHeight() - MainActivity.bottomNavigationBar.getTop();
         }
-
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
-        {
-            holder.tv.setText(mDatas.get(position));
-        }
-
-        @Override
-        public int getItemCount()
-        {
-            return mDatas.size();
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder
-        {
-
-            TextView tv;
-
-            public MyViewHolder(View view)
-            {
-                super(view);
-                tv = (TextView) view.findViewById(R.id.id_num);
-            }
-        }
+        return 0;
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
