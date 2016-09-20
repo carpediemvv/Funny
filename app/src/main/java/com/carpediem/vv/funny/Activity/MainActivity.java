@@ -1,8 +1,13 @@
 package com.carpediem.vv.funny.Activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -26,6 +31,7 @@ import com.carpediem.vv.funny.R;
 import java.util.ArrayList;
 
 import Utils.CacheUtils;
+import Utils.PermissionsChecker;
 import bean.Userbean.MyUser;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
@@ -37,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
     private SearchView mSearchView;
     private SearchView.SearchAutoComplete editText;
+    private static final int REQUEST_CODE = 0; // 请求码
+    private PermissionsChecker mPermissionsChecker; // 权限检测器
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.READ_PHONE_STATE
+
+    };
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -53,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "c4e9104738e2747a6c63855e7d2a9b7d");
         setContentView(R.layout.activity_main);
+        mPermissionsChecker = new PermissionsChecker(this);
         //toolbar = (Toolbar) findViewById(R.id.toolbar);
         // App Logo
         // toolbar.setLogo(R.mipmap.ic_launcher);
@@ -82,11 +96,10 @@ public class MainActivity extends AppCompatActivity {
         init();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        initUser();
+        // Here, thisActivity is the current activity
     }
 
     private void initUser() {
-
         Boolean login = CacheUtils.getBoolean(this, "login", false);
         if(login){
 
@@ -263,6 +276,38 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    @Override protected void onResume() {
+        super.onResume();
+        // 缺少权限时, 进入权限配置页面
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //进入到这里代表没有权限.
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_PHONE_STATE)){
+                //已经禁止提示了
+                Toast.makeText(MainActivity.this, "您已禁止该权限，需要重新开启。", Toast.LENGTH_SHORT).show();
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
 
+            }
+        } else {
+            initUser();
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case REQUEST_CODE:
+                if(grantResults.length >0 &&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    //用户同意授权
+                    initUser();
+                }else{
+                    //用户拒绝授权
+                }
+                break;
+        }
+    }
 
 }
