@@ -4,23 +4,6 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:paddingBottom="30dp"
-        android:layout_height="wrap_content"
-        android:text="这山谷(1)在assets中新建文件夹fonts，把ttf字体库考到目录下
-(2)使用代码
-[java] view plain copy
-TextView view1 = (TextView) findViewById(R.id.tv1);
-Typeface tf1 = Typeface.createFromAsset(getAssets()," />
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这山谷(1)在assets中新建文件夹fonts，把ttf字体库考到目录下
-(2)使用代码
-[java] view plain copy
-TextView view1 = (TextView) findViewById(R.id.tv1);
-Typeface tf1 = Typeface.createFromAsset(getAssets()," />
+
+
 </LinearLayout>

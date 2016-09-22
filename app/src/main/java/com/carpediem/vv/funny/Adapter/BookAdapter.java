@@ -1,4 +1,4 @@
-package Adapter;
+package com.carpediem.vv.funny.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,8 +18,8 @@ import com.carpediem.vv.funny.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import bean.BookBean.Book;
-import bean.BookBean.BookTopic;
+import com.carpediem.vv.funny.bean.BookBean.Book;
+import com.carpediem.vv.funny.bean.BookBean.BookTopic;
 
 /**
  * Created by Administrator on 2016/8/24.

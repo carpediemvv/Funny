@@ -1,4 +1,4 @@
-package bean.FunnyGIF;
+package com.carpediem.vv.funny.bean.FunnyGIF;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;

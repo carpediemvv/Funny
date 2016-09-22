@@ -33,11 +33,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import bean.FunnyGIF.FunnyGif;
+import com.carpediem.vv.funny.bean.FunnyGIF.FunnyGif;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import weight.BottomTrackListener;
+import com.carpediem.vv.funny.weight.BottomTrackListener;
 
 /**
  * Created by Administrator on 2016/6/28.
@@ -105,7 +105,7 @@ public class DailyFragment extends BaseFragment {
     }
 
     private void initToolbar() {
-        toolbar.setTitle("四叶草");
+        toolbar.setTitle("每日GIF");
         toolbar.inflateMenu(R.menu.test);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

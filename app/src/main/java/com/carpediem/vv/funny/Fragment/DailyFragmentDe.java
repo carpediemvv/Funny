@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import bean.FunnyGIF.FunnyGif;
-import Utils.MyApplication;
+import com.carpediem.vv.funny.bean.FunnyGIF.FunnyGif;
+import com.carpediem.vv.funny.Utils.MyApplication;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;

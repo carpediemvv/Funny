@@ -1,6 +1,6 @@
-package bean.FunnyGIF;
+package com.carpediem.vv.funny.bean.FunnyGIF;
 
-import bean.Userbean.MyUser;
+import com.carpediem.vv.funny.bean.Userbean.MyUser;
 import cn.bmob.v3.BmobObject;
 
 /**

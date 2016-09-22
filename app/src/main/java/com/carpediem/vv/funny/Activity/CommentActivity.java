@@ -22,9 +22,9 @@ import com.carpediem.vv.funny.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import bean.FunnyGIF.Comment;
-import bean.FunnyGIF.FunnyGif;
-import bean.Userbean.MyUser;
+import com.carpediem.vv.funny.bean.FunnyGIF.Comment;
+import com.carpediem.vv.funny.bean.FunnyGIF.FunnyGif;
+import com.carpediem.vv.funny.bean.Userbean.MyUser;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;

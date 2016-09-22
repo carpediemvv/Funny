@@ -1,11 +1,9 @@
 package com.carpediem.vv.funny.Fragment;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.R;
@@ -30,9 +28,7 @@ public class GameFragment extends BaseFragment {
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_game, null);
-        TextView textView = (TextView) view.findViewById(R.id.tv);
-        Typeface asset = Typeface.createFromAsset(mActivity.getAssets(), "fonts/apple.ttf");
-        textView.setTypeface(asset);
+
         return view;
     }
 

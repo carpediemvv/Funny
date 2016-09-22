@@ -27,12 +27,12 @@ import com.carpediem.vv.funny.Fragment.GameFragment;
 import com.carpediem.vv.funny.Fragment.MusicFragment;
 import com.carpediem.vv.funny.Fragment.VideoFragment;
 import com.carpediem.vv.funny.R;
+import com.carpediem.vv.funny.Utils.CacheUtils;
+import com.carpediem.vv.funny.Utils.PermissionsChecker;
+import com.carpediem.vv.funny.bean.Userbean.MyUser;
 
 import java.util.ArrayList;
 
-import Utils.CacheUtils;
-import Utils.PermissionsChecker;
-import bean.Userbean.MyUser;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 .addItem(new BottomNavigationItem(R.drawable.ic_music_note_white_24dp, "音乐").setActiveColorResource(R.color.colorPrimary))
                 .addItem(new BottomNavigationItem(R.drawable.ic_tv_white_24dp, "视频").setActiveColorResource(R.color.colorPrimary))
                 .addItem(new BottomNavigationItem(R.drawable.ic_videogame_asset_white_24dp, "鱼乐").setActiveColorResource(R.color.colorPrimary))
-                .setMode(BottomNavigationBar.MODE_SHIFTING)//设置底部代文字显示模式。MODE_DEFAULT默认MODE_FIXED代文字MODE_SHIFTING不带文字
+                .setMode(BottomNavigationBar.MODE_FIXED)//设置底部代文字显示模式。MODE_DEFAULT默认MODE_FIXED代文字MODE_SHIFTING不带文字
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)//背景模式BACKGROUND_STYLE_RIPPLE涟漪BACKGROUND_STYLE_STATIC静态
                 .initialise();
         setDefaultFragment();

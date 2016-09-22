@@ -1,4 +1,4 @@
-package weight;
+package com.carpediem.vv.funny.weight;
 
 import android.content.Context;
 import android.content.res.TypedArray;

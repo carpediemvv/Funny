@@ -20,7 +20,7 @@
         android:orderInCategory="80"
         android:title="action_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always"/>
+        app:showAsAction="never"/>
     <!-- <item
         android:id="@+id/action_share"
         android:orderInCategory="90"

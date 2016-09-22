@@ -1,4 +1,4 @@
-package weight;
+package com.carpediem.vv.funny.weight;
 
 import android.animation.ObjectAnimator;
 import android.support.v7.widget.RecyclerView;

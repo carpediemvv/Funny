@@ -15,7 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.carpediem.vv.funny.R;
 
-import Utils.PermissionsChecker;
+import com.carpediem.vv.funny.Utils.PermissionsChecker;
 
 /**
  * 权限获取页面

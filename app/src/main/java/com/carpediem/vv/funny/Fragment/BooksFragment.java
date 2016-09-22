@@ -14,15 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.carpediem.vv.funny.Adapter.BookAdapter;
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.R;
+import com.carpediem.vv.funny.bean.BookBean.Book;
+import com.carpediem.vv.funny.bean.BookBean.BookTopic;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.BookAdapter;
-import bean.BookBean.Book;
-import bean.BookBean.BookTopic;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;

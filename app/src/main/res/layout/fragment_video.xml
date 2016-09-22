@@ -3,35 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-   <LinearLayout
-       android:id="@+id/linearLayout"
-        android:layout_gravity="bottom"
-       android:elevation="3dp"
-       android:layout_width="match_parent"
-       android:orientation="horizontal"
-       android:background="@drawable/myrect"
-       android:layout_height="wrap_content">
-       <Button
-           android:layout_width="0dp"
-           android:layout_weight="1"
-           android:layout_height="wrap_content"
-           android:text="按钮1"/>
-       <Button
-           android:layout_width="0dp"
-           android:layout_weight="1"
-           android:layout_height="wrap_content"
-           android:text="按钮2"/>
-       <Button
-           android:layout_width="0dp"
-           android:layout_weight="1"
-           android:layout_height="wrap_content"
-           android:text="按钮3"/>
-       <Button
-           android:layout_width="0dp"
-           android:layout_weight="1"
-           android:layout_height="wrap_content"
-           android:text="按钮4"/>
-
-   </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

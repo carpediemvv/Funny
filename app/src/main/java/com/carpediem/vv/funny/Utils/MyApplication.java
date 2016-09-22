@@ -1,4 +1,4 @@
-package Utils;
+package com.carpediem.vv.funny.Utils;
 
 import android.app.Application;
 

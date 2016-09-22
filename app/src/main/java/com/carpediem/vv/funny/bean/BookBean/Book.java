@@ -1,4 +1,4 @@
-package bean.BookBean;
+package com.carpediem.vv.funny.bean.BookBean;
 
 import cn.bmob.v3.BmobObject;
 

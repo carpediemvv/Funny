@@ -2,8 +2,11 @@ package com.carpediem.vv.funny.Fragment;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
@@ -17,6 +20,8 @@ import android.widget.LinearLayout;
 import com.carpediem.vv.funny.Activity.MainActivity;
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.R;
+
+import java.io.IOException;
 
 
 /**
@@ -34,6 +39,7 @@ public class MusicFragment extends BaseFragment {
     private ImageButton musicStylus;
     private ImageButton musicneedle;
     private ImageButton musiRedBg;
+    private MediaPlayer player;
 
     public static MusicFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -95,6 +101,8 @@ public class MusicFragment extends BaseFragment {
                     animator5.setRepeatCount(Animation.INFINITE);
                     animator5.setRepeatMode(ValueAnimator.RESTART);
                     animator5.setInterpolator(new LinearInterpolator());
+                    //播放音频
+                    playMusic();
                 } else {
                     //底部导航动画
                     musicPlay.setImageDrawable(getResources().getDrawable(R.drawable.image_button_pause_selector));
@@ -113,12 +121,43 @@ public class MusicFragment extends BaseFragment {
                     animator4.setDuration(500).start();
                     animator4.setStartDelay(60);
                     //光盘背景旋转动画暂停
-                    animator5.cancel();
+                    if (animator5!=null){
+                        animator5.cancel();
+                    }
+                    //暂停音频
+                    if(player!=null){
+                        player.stop();
+                    }
+
                 }
             }
 
         });
         return view;
+    }
+
+    private void playMusic() {
+        player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            player.setDataSource("http://audio.xmcdn.com/group19/M04/E1/AA/wKgJJlfNi-OjOPlbACx3lx8er-Y350.m4a"); // 网络资源文件
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.e("music","播放准备");
+        // 自定义onPreparedListener接口
+        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+            /**
+             * prepare工作完成之后，会回调该函数
+             */
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+                Log.e("music","开始播放");
+            }
+        });
+        player.prepareAsync();
     }
 
     private void initLinearLayout() {

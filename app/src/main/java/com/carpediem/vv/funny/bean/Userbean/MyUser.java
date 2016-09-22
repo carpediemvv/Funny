@@ -1,4 +1,4 @@
-package bean.Userbean;
+package com.carpediem.vv.funny.bean.Userbean;
 
 import cn.bmob.v3.BmobUser;
 
