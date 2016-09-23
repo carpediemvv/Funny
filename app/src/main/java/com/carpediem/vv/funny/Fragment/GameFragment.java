@@ -1,17 +1,16 @@
 package com.carpediem.vv.funny.Fragment;
 
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
 
-import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.R;
 
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class GameFragment extends BaseFragment {
+public class GameFragment extends PreferenceFragmentCompat {
 
     public static GameFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -20,16 +19,16 @@ public class GameFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
-    public void initData() {
-        super.initData();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.pref_general);
     }
 
     @Override
-    protected View initView() {
-        View view = View.inflate(mActivity, R.layout.fragment_game, null);
+    public void onCreatePreferences(Bundle bundle, String s) {
 
-        return view;
     }
 
     @Override

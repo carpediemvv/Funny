@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 .addItem(new BottomNavigationItem(R.drawable.ic_book_white_24dp, "书籍").setActiveColorResource(R.color.colorPrimary))
                 .addItem(new BottomNavigationItem(R.drawable.ic_music_note_white_24dp, "音乐").setActiveColorResource(R.color.colorPrimary))
                 .addItem(new BottomNavigationItem(R.drawable.ic_tv_white_24dp, "视频").setActiveColorResource(R.color.colorPrimary))
-                .addItem(new BottomNavigationItem(R.drawable.ic_videogame_asset_white_24dp, "鱼乐").setActiveColorResource(R.color.colorPrimary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_person_white_36dp, "设置").setActiveColorResource(R.color.colorPrimary))
                 .setMode(BottomNavigationBar.MODE_FIXED)//设置底部代文字显示模式。MODE_DEFAULT默认MODE_FIXED代文字MODE_SHIFTING不带文字
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)//背景模式BACKGROUND_STYLE_RIPPLE涟漪BACKGROUND_STYLE_STATIC静态
                 .initialise();
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 4:
                          fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, fragments.get(position), "main_8fragment").commit();
+                        fragmentTransaction.replace(R.id.main_fragment, GameFragment.newInstance("Games"), "main_8fragment").commit();
                       //  toolbar.setVisibility(View.GONE);
                         break;
 
@@ -227,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(BooksFragment.newInstance("Books"));
         fragments.add(MusicFragment.newInstance("Music"));
         fragments.add(VideoFragment.newInstance("Videos"));
-        fragments.add(GameFragment.newInstance("Games"));
         return fragments;
     }
     @Override
