@@ -26,6 +26,8 @@ import com.carpediem.vv.funny.Activity.MainActivity;
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.Base.DividerItemDecoration;
 import com.carpediem.vv.funny.R;
+import com.carpediem.vv.funny.bean.FunnyGIF.FunnyGif;
+import com.carpediem.vv.funny.weight.BottomTrackListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,11 +35,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.carpediem.vv.funny.bean.FunnyGIF.FunnyGif;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import com.carpediem.vv.funny.weight.BottomTrackListener;
 
 /**
  * Created by Administrator on 2016/6/28.
@@ -166,9 +166,22 @@ public class DailyFragment extends BaseFragment {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                Log.d("test", "StateChanged = " + newState);
 
+                switch (newState){
+                    case RecyclerView.SCROLL_STATE_SETTLING:
+                        Log.i("Main","用户在手指离开屏幕之前，由于滑了一下，视图仍然依靠惯性继续滑动");
+                        Glide.with(mActivity).pauseRequests();
+                        //刷新
+                        break;
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        Log.i("Main", "视图已经停止滑动");
+                        Glide.with(mActivity).resumeRequests();
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                        Log.i("Main","手指没有离开屏幕，视图正在滑动");
+                        Glide.with(mActivity).resumeRequests();
+                        break;
+                }
             }
 
             @Override

@@ -1,18 +1,26 @@
 package com.carpediem.vv.funny.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.carpediem.vv.funny.Activity.PlayVideoActivity;
 import com.carpediem.vv.funny.Adapter.StaggeredHomeAdapter;
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.R;
+import com.carpediem.vv.funny.bean.VideoBean.VideoBean;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Administrator on 2016/6/28.
@@ -20,7 +28,7 @@ import java.util.List;
 public class VideoFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
-    private List<String> mDatas;
+    private List<VideoBean> mDatas;
     private StaggeredHomeAdapter mStaggeredHomeAdapter;
 
 
@@ -33,20 +41,38 @@ public class VideoFragment extends BaseFragment {
     }
     @Override
     public void initData() {
-        mDatas = new ArrayList<String>();
-        for (int i = 'A'; i < 'z'; i++)
-        {
-            mDatas.add("" + (char) i);
-        }
-        super.initData();
+        Log.e("bmob", "：initData开始执行" );
+        mDatas = new ArrayList<VideoBean>();
+        BmobQuery<VideoBean> query = new BmobQuery<VideoBean>();
+        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
+        query.findObjects(new FindListener<VideoBean>() {
+            @Override
+            public void done(List<VideoBean> object, BmobException e) {
+                if (e == null) {
+                    mDatas.clear();
+                    for (VideoBean videoBean : object) {
+                        mDatas.add(videoBean);
+
+                        if (mStaggeredHomeAdapter!=null){
+                            mStaggeredHomeAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                } else {
+                    Log.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                }
+            }
+        });
+
     }
 
 
     @Override
     protected View initView() {
+        Log.e("bmob", "：initView开始执行" );
         View view = View.inflate(mActivity, R.layout.fragment_video, null);
-
         mRecyclerView = (RecyclerView)view.findViewById(R.id.id_recyclerview);
+        Log.e("bmob", "：" +mDatas.size());
         mStaggeredHomeAdapter = new StaggeredHomeAdapter(mActivity, mDatas);
 
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
@@ -58,6 +84,7 @@ public class VideoFragment extends BaseFragment {
         initEvent();
         return view;
     }
+
     private void initEvent()
     {
         mStaggeredHomeAdapter.setOnItemClickLitener(new StaggeredHomeAdapter.OnItemClickLitener()
@@ -65,8 +92,10 @@ public class VideoFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int position)
             {
-                Toast.makeText(mActivity,
-                        position + " click", Toast.LENGTH_SHORT).show();
+                Intent mIntent=new Intent(mActivity,PlayVideoActivity.class);
+                mIntent.putExtra("VideoFileURL",mDatas.get(position).getVideoFile().getFileUrl());
+                mActivity.startActivity(mIntent);
+
             }
 
             @Override

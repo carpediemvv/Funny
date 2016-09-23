@@ -23,7 +23,10 @@
         <activity
             android:name=".Activity.BookDetailActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".Activity.PermissionsActivity"></activity>
+        <activity android:name=".Activity.PermissionsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Activity.PlayVideoActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
     <!--允许联网 -->
     <uses-permission android:name="android.permission.INTERNET" />

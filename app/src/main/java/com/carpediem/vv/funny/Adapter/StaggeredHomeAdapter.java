@@ -1,5 +1,6 @@
 package com.carpediem.vv.funny.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -8,21 +9,21 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.carpediem.vv.funny.R;
+import com.carpediem.vv.funny.bean.VideoBean.VideoBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StaggeredHomeAdapter extends
 		RecyclerView.Adapter<StaggeredHomeAdapter.MyViewHolder>
 {
-
-	private List<String> mDatas;
+	private Activity mActivity;
+	private List<VideoBean> mDatas;
 	private LayoutInflater mInflater;
-
-	private List<Integer> mHeights;
 
 	public interface OnItemClickLitener
 	{
@@ -38,16 +39,13 @@ public class StaggeredHomeAdapter extends
 		this.mOnItemClickLitener = mOnItemClickLitener;
 	}
 
-	public StaggeredHomeAdapter(Context context, List<String> datas)
+	public StaggeredHomeAdapter(Context context, List<VideoBean> datas)
 	{
+		this.mActivity = (Activity) context;
 		mInflater = LayoutInflater.from(context);
 		mDatas = datas;
 
-		mHeights = new ArrayList<Integer>();
-		for (int i = 0; i < mDatas.size(); i++)
-		{
-			mHeights.add( (int) (100 + Math.random() * 300));
-		}
+
 	}
 
 	@Override
@@ -61,8 +59,13 @@ public class StaggeredHomeAdapter extends
 	@Override
 	public void onBindViewHolder(final MyViewHolder holder, final int position)
 	{
-		holder.tv.setText(mDatas.get(position));
 
+		Glide.with(mActivity)
+				.load(mDatas.get(position).getVideoImage().getFileUrl())
+				.fitCenter()
+				.crossFade()
+				.diskCacheStrategy(DiskCacheStrategy.SOURCE)
+				.into(holder.imageView);
 		// 如果设置了回调，则设置点击事件
 		if (mOnItemClickLitener != null)
 		{
@@ -107,12 +110,12 @@ public class StaggeredHomeAdapter extends
 	class MyViewHolder extends ViewHolder
 	{
 
-		TextView tv;
+		ImageView imageView;
 
 		public MyViewHolder(View view)
 		{
 			super(view);
-			tv = (TextView) view.findViewById(R.id.id_num);
+			imageView = (ImageView) view.findViewById(R.id.image_bg);
 
 		}
 	}

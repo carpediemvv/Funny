@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.READ_PHONE_STATE
 
     };
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.

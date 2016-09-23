@@ -6,12 +6,19 @@
     android:background="@drawable/item_bg"
     >
 
-    <TextView
-        android:id="@+id/id_num"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/image_bg"
+        android:layout_width="match_parent"
         android:layout_gravity="center"
         android:layout_height="230dp"
         android:gravity="center"
-        android:text="1" />
+        />
+    <ImageView
+        android:src="@mipmap/btn_playing_play"
+        android:id="@+id/image_pre"
+        android:layout_width="wrap_content"
+        android:layout_height="230dp"
+        android:layout_gravity="center"
+        android:gravity="center"/>
 
 </FrameLayout>

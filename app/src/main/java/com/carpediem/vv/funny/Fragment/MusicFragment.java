@@ -216,5 +216,16 @@ public class MusicFragment extends BaseFragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (player!=null){
+            if(player.isPlaying()){
+                player.stop();
+            }
+            player.release();
 
+        }
+
+    }
 }

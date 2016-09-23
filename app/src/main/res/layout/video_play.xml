@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:theme="@style/Theme.AppCompat.NoActionBar"/>
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:keepScreenOn="true"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            />
+
+        <ImageView
+            android:src="@mipmap/btn_playing_pause"
+            android:id="@+id/image_pre"
+            android:layout_width="match_parent"
+            android:scaleType="center"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放" />
+
+
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止" />
+    </LinearLayout>
+
+</LinearLayout>

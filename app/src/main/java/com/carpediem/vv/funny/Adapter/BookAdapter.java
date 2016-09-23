@@ -14,12 +14,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.carpediem.vv.funny.Activity.BookDetailActivity;
 import com.carpediem.vv.funny.R;
+import com.carpediem.vv.funny.bean.BookBean.Book;
+import com.carpediem.vv.funny.bean.BookBean.BookTopic;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.carpediem.vv.funny.bean.BookBean.Book;
-import com.carpediem.vv.funny.bean.BookBean.BookTopic;
 
 /**
  * Created by Administrator on 2016/8/24.
@@ -91,6 +90,7 @@ public class BookAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         final ArrayList<Book> list = new ArrayList<Book>();
         String textContent = mDatas.get(position).getTopicName();
+
         if (!textContent.isEmpty()) {
             ((ItemViewHolder) holder).textCategory.setText(textContent);
         }
@@ -106,19 +106,22 @@ public class BookAdapter extends RecyclerView.Adapter {
             Glide.with(mActivity)
                     .load(list.get(0).getBookImage())
                     .fitCenter()
-
+                    .placeholder(R.drawable.button_bg_press)
+                    .error(R.drawable.imagenotfound)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(((ItemViewHolder) holder).imageViewOne);
             Glide.with(mActivity)
                     .load(list.get(1).getBookImage())
                     .fitCenter()
-
+                    .placeholder(R.drawable.button_bg_press)
+                    .error(R.drawable.imagenotfound)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(((ItemViewHolder) holder).imageViewTwo);
             Glide.with(mActivity)
                     .load(list.get(2).getBookImage())
                     .fitCenter()
-
+                    .placeholder(R.drawable.button_bg_press)
+                    .error(R.drawable.imagenotfound)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(((ItemViewHolder) holder).imageViewThree);
         }

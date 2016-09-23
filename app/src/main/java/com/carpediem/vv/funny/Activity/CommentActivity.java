@@ -18,13 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.carpediem.vv.funny.R;
+import com.carpediem.vv.funny.bean.FunnyGIF.Comment;
+import com.carpediem.vv.funny.bean.FunnyGIF.FunnyGif;
+import com.carpediem.vv.funny.bean.Userbean.MyUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.carpediem.vv.funny.bean.FunnyGIF.Comment;
-import com.carpediem.vv.funny.bean.FunnyGIF.FunnyGif;
-import com.carpediem.vv.funny.bean.Userbean.MyUser;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
@@ -142,6 +142,7 @@ public class CommentActivity extends AppCompatActivity {
         query.addWhereEqualTo("funnyGif",new BmobPointer(funnyGif));
 //希望同时查询该评论的发布者的信息，以及该帖子的作者的信息，这里用到上面`include`的并列对象查询和内嵌对象的查询
         query.include("user");
+        query.order("createdAt");
         query.findObjects(new FindListener<Comment>() {
 
             @Override
