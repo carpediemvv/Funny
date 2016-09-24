@@ -89,6 +89,7 @@ public class BooksFragment extends BaseFragment {
                                     Log.e("bookTopic","bookTopic查询的数据"+book.getBookName()+book.getBookInfo());
                                     bookList.add(book);
                                 }
+
                                 swipeRefreshLayout.setRefreshing(false);
                                 mAdapter.notifyDataSetChanged();
                             }
