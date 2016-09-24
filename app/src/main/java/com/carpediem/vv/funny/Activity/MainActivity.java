@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 4:
                          fragmentTransaction = supportFragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.main_fragment, GameFragment.newInstance("Games"), "main_8fragment").commit();
+                        fragmentTransaction.replace(R.id.main_fragment,fragments.get(position), "main_8fragment").commit();
                       //  toolbar.setVisibility(View.GONE);
                         break;
 
@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(BooksFragment.newInstance("Books"));
         fragments.add(MusicFragment.newInstance("Music"));
         fragments.add(VideoFragment.newInstance("Videos"));
+        fragments.add(GameFragment.newInstance("Games"));
         return fragments;
     }
     @Override
