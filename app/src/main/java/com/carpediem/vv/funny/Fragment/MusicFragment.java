@@ -16,6 +16,8 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.carpediem.vv.funny.Activity.MainActivity;
 import com.carpediem.vv.funny.Base.BaseFragment;
@@ -40,6 +42,7 @@ public class MusicFragment extends BaseFragment {
     private ImageButton musicneedle;
     private ImageButton musiRedBg;
     private MediaPlayer player;
+    private SeekBar seekBar;
 
     public static MusicFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -52,12 +55,21 @@ public class MusicFragment extends BaseFragment {
     @Override
     public void initData() {
 
+        player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            player.setDataSource("http://audio.xmcdn.com/group19/M04/E1/AA/wKgJJlfNi-OjOPlbACx3lx8er-Y350.m4a"); // 网络资源文件
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected View initView() {
         handler = new Handler();
         View view = View.inflate(mActivity, R.layout.fragment_music, null);
+        seekBar = (SeekBar) view.findViewById(R.id.seekbar);
         linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout_root);
         initLinearLayout();
         musicPlay = (ImageButton) view.findViewById(R.id.music_play);
@@ -137,13 +149,7 @@ public class MusicFragment extends BaseFragment {
     }
 
     private void playMusic() {
-        player = new MediaPlayer();
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-            player.setDataSource("http://audio.xmcdn.com/group19/M04/E1/AA/wKgJJlfNi-OjOPlbACx3lx8er-Y350.m4a"); // 网络资源文件
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Toast.makeText(mActivity,"正在缓存歌曲,请稍候",Toast.LENGTH_SHORT).show();
         Log.e("music","播放准备");
         // 自定义onPreparedListener接口
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -155,9 +161,28 @@ public class MusicFragment extends BaseFragment {
             public void onPrepared(MediaPlayer mp) {
                 mp.start();
                 Log.e("music","开始播放");
+                initSeekBar();
             }
         });
         player.prepareAsync();
+    }
+
+    private void initSeekBar() {
+        //获得歌曲的长度并设置成播放进度条的最大值
+        seekBar.setMax(player.getDuration());
+        Log.e("music",""+player.getDuration());
+        //seekBar
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, player.getDuration());
+        valueAnimator.setDuration(player.getDuration());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                //获得歌曲现在播放位置并设置成播放进度条的值
+                seekBar.setProgress(player.getCurrentPosition());
+                Log.e("music",""+player.getCurrentPosition());
+            }
+        });
+        valueAnimator.start();
     }
 
     private void initLinearLayout() {

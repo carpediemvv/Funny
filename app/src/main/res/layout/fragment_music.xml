@@ -4,6 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <RelativeLayout
+        android:gravity="center"
+        android:id="@+id/rl_controbar_playing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/controlbar_playing_bg"
+        android:layerType="software">
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:splitTrack="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:progressDrawable="@drawable/seekbar_progress"
+            android:thumb="@drawable/playing_control_time"
+
+            />
+    </RelativeLayout>
 
     <RelativeLayout
 

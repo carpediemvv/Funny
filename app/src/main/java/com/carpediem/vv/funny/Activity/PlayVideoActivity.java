@@ -51,37 +51,57 @@ public class PlayVideoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+    }
+
+    private void initData() {
+        String VideoFileURL;
+        try {
+            Intent intent = getIntent();
+            VideoFileURL = intent.getStringExtra("VideoFileURL");
+            mp.setDataSource(VideoFileURL);
+            mp.setDisplay(surfaceView.getHolder());
+            mp.prepare();
+            String propertyName = "Alpha";
+            ObjectAnimator animator = ObjectAnimator.ofFloat(imagePre, propertyName, 1f, 0f);
+            animator.setDuration(500);
+            animator.start();
+
+        }catch(IllegalArgumentException e) {
+            e.printStackTrace();
+        }catch(SecurityException e) {
+            e.printStackTrace();
+        }catch(IllegalStateException e) {
+            e.printStackTrace();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initPlay() {
-        buttonPlay.setOnClickListener(new View.OnClickListener() {
+
+        imagePre.setOnClickListener(new View.OnClickListener() {
 
             public String VideoFileURL;
 
             @Override
             public void onClick(View v) {
-                mp.reset();
-                try {
-                    Intent intent = getIntent();
-                    VideoFileURL = intent.getStringExtra("VideoFileURL");
-                    mp.setDataSource(VideoFileURL);
-                    mp.setDisplay(surfaceView.getHolder());
-                    mp.prepare();
-                    mp.start();
+               // mp.reset();
+                if(mp.isPlaying()){
+                    mp.pause();
                     String propertyName = "Alpha";
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(imagePre, propertyName, 1f, 0f);
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(imagePre, propertyName, 0f, 1f);
                     animator.setDuration(500);
                     animator.start();
-
-                }catch(IllegalArgumentException e) {
-                    e.printStackTrace();
-                }catch(SecurityException e) {
-                    e.printStackTrace();
-                }catch(IllegalStateException e) {
-                    e.printStackTrace();
-                }catch(IOException e) {
-                    e.printStackTrace();
+                }else {
+                    initData();
+                        mp.start();
+                        String propertyName = "Alpha";
+                        ObjectAnimator animator = ObjectAnimator.ofFloat(imagePre, propertyName, 1f, 0f);
+                        animator.setDuration(500);
+                        animator.start();
                 }
+
 
             }
         });
