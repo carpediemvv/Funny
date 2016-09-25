@@ -43,6 +43,7 @@ public class MusicFragment extends BaseFragment {
     private ImageButton musiRedBg;
     private MediaPlayer player;
     private SeekBar seekBar;
+    private ValueAnimator valueAnimator;
 
     public static MusicFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -55,14 +56,7 @@ public class MusicFragment extends BaseFragment {
     @Override
     public void initData() {
 
-        player = new MediaPlayer();
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-            player.setDataSource("http://audio.xmcdn.com/group19/M04/E1/AA/wKgJJlfNi-OjOPlbACx3lx8er-Y350.m4a"); // 网络资源文件
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -70,6 +64,7 @@ public class MusicFragment extends BaseFragment {
         handler = new Handler();
         View view = View.inflate(mActivity, R.layout.fragment_music, null);
         seekBar = (SeekBar) view.findViewById(R.id.seekbar);
+        seekBar.setMax(0);
         linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout_root);
         initLinearLayout();
         musicPlay = (ImageButton) view.findViewById(R.id.music_play);
@@ -137,8 +132,15 @@ public class MusicFragment extends BaseFragment {
                         animator5.cancel();
                     }
                     //暂停音频
-                    if(player!=null){
-                        player.stop();
+                    if (player!=null){
+                        if(player.isPlaying()){
+                            player.stop();
+                        }
+                        player.release();
+                        if (valueAnimator!=null){
+                            valueAnimator.cancel();
+                        }
+
                     }
 
                 }
@@ -149,6 +151,14 @@ public class MusicFragment extends BaseFragment {
     }
 
     private void playMusic() {
+        player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            player.setDataSource("http://audio.xmcdn.com/group19/M04/E1/AA/wKgJJlfNi-OjOPlbACx3lx8er-Y350.m4a"); // 网络资源文件
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Toast.makeText(mActivity,"正在缓存歌曲,请稍候",Toast.LENGTH_SHORT).show();
         Log.e("music","播放准备");
         // 自定义onPreparedListener接口
@@ -172,14 +182,13 @@ public class MusicFragment extends BaseFragment {
         seekBar.setMax(player.getDuration());
         Log.e("music",""+player.getDuration());
         //seekBar
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, player.getDuration());
+        valueAnimator = ValueAnimator.ofFloat(0, player.getDuration());
         valueAnimator.setDuration(player.getDuration());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 //获得歌曲现在播放位置并设置成播放进度条的值
                 seekBar.setProgress(player.getCurrentPosition());
-                Log.e("music",""+player.getCurrentPosition());
             }
         });
         valueAnimator.start();
@@ -192,13 +201,13 @@ public class MusicFragment extends BaseFragment {
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         System.out.println("---action down-----");
-                        mAnimator = animateShow(MainActivity.bottomNavigationBar);
+                      /*  mAnimator = animateShow(MainActivity.bottomNavigationBar);
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 mAnimator = animateHide(MainActivity.bottomNavigationBar);
                             }
-                        }, 3000);
+                        }, 3000);*/
                         break;
                     case MotionEvent.ACTION_MOVE:
                         System.out.println("---action move-----");
@@ -244,13 +253,11 @@ public class MusicFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (player!=null){
-            if(player.isPlaying()){
-                player.stop();
-            }
-            player.release();
-
+        if (valueAnimator!=null){
+            valueAnimator.cancel();
         }
+
+
 
     }
 }

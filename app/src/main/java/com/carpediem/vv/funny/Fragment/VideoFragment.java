@@ -2,6 +2,8 @@ package com.carpediem.vv.funny.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -30,6 +32,9 @@ public class VideoFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private List<VideoBean> mDatas;
     private StaggeredHomeAdapter mStaggeredHomeAdapter;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private Handler handler;
 
 
     public static VideoFragment newInstance(String content) {
@@ -56,6 +61,7 @@ public class VideoFragment extends BaseFragment {
                         if (mStaggeredHomeAdapter!=null){
                             mStaggeredHomeAdapter.notifyDataSetChanged();
                         }
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                 } else {
@@ -71,6 +77,8 @@ public class VideoFragment extends BaseFragment {
     protected View initView() {
         Log.e("bmob", "：initView开始执行" );
         View view = View.inflate(mActivity, R.layout.fragment_video, null);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout);
+        initSwipeRefreshLayout();
         mRecyclerView = (RecyclerView)view.findViewById(R.id.id_recyclerview);
         Log.e("bmob", "：" +mDatas.size());
         mStaggeredHomeAdapter = new StaggeredHomeAdapter(mActivity, mDatas);
@@ -85,6 +93,30 @@ public class VideoFragment extends BaseFragment {
         return view;
     }
 
+    private void initSwipeRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+        //下拉刷新
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
+
+    }
     private void initEvent()
     {
         mStaggeredHomeAdapter.setOnItemClickLitener(new StaggeredHomeAdapter.OnItemClickLitener()

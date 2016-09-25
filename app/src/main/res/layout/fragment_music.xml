@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <RelativeLayout
-        android:gravity="center"
         android:id="@+id/rl_controbar_playing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/controlbar_playing_bg"
+        android:gravity="center"
         android:layerType="software">
 
         <SeekBar
@@ -17,10 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:splitTrack="false"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:progressDrawable="@drawable/seekbar_progress"
+            android:splitTrack="false"
             android:thumb="@drawable/playing_control_time"
 
             />
@@ -38,29 +39,34 @@
             android:id="@+id/red_music_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="40dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="60dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:src="@mipmap/playing_cover_lp" />
+
         <ImageButton
             android:id="@+id/music_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="40dp"
             android:background="@android:color/transparent"
+            android:paddingTop="20dp"
             android:scaleType="fitCenter"
             android:src="@mipmap/playing_lp" />
 
         <RelativeLayout
-            android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:layout_alignTop="@+id/red_music_bg"
+
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+
             android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp">
+
+            android:gravity="right">
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -126,6 +132,9 @@
             android:id="@+id/music_play"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:layout_alignLeft="@+id/music_pre"
+            android:layout_alignStart="@+id/music_pre"
+            android:layout_alignTop="@+id/music_pre"
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
