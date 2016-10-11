@@ -91,7 +91,7 @@ public class DailyFragment extends BaseFragment {
 
     @Override
     protected View initView() {
-        typeface = Typeface.createFromAsset(mActivity.getAssets(), "fonts/apple.ttf");
+        typeface = Typeface.createFromAsset(mActivity.getAssets(), "fonts/1.ttf");
         View view = View.inflate(mActivity, R.layout.fragment_daily, null);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         initToolbar();

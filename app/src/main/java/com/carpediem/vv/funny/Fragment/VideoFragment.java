@@ -34,7 +34,7 @@ public class VideoFragment extends BaseFragment {
     private StaggeredHomeAdapter mStaggeredHomeAdapter;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private Handler handler;
+    private Handler handler=new Handler();
 
 
     public static VideoFragment newInstance(String content) {

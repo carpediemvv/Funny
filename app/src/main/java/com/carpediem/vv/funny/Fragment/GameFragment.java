@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.carpediem.vv.funny.Base.BaseFragment;
 import com.carpediem.vv.funny.R;
@@ -12,6 +15,8 @@ import com.carpediem.vv.funny.R;
  * Created by Administrator on 2016/6/28.
  */
 public class GameFragment extends BaseFragment {
+
+    private LinearLayout testVersion;
 
     public static GameFragment newInstance(String content) {
         Bundle args = new Bundle();
@@ -30,6 +35,13 @@ public class GameFragment extends BaseFragment {
     @Override
     protected View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_game, null);
+        testVersion = (LinearLayout) view.findViewById(R.id.test_version);
+        testVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity,"版本检测",Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 
